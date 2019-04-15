@@ -237,17 +237,18 @@ header {
   width: 90%;
   margin: 0 auto;
   text-align: center;
+  padding: 10px;
 }
 /*Modal*/
-input[type="text"],
-input[type="password"] {
-  width: 100%;
+input {
+  border: 1px solid var(--main-font-color);
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
+}
+input[type="text"] {
+  width: 100%;
+
   color: #878787;
-  border: 1px solid var(--main-font-color);
-  box-sizing: border-box;
 }
 
 .login-btn {
@@ -279,7 +280,26 @@ button:hover {
   margin: 24px 0 12px 0;
   position: relative;
 }
-
+.password {
+  display: flex;
+  margin: 8px 0 8px;
+  width: 100%;
+  border: 1px solid var(--main-font-color);
+}
+.toggle-password {
+  width: 100%;
+  padding: 15px;
+  outline: none;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+.input-field {
+  width: 100%;
+  padding: 5px 20px;
+  border: none;
+  outline: none;
+}
 img.avatar {
   width: 20%;
   border-radius: 50%;
