@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Admin-dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="admin-dashboard.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto|Bebas Neue| Cheddar jack| cursive"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <header id="home">
+      <h1 class="topic">Quick Credit</h1>
+      <div class="menu">
+        <span class="bar"></span>
+      </div>
+      <nav class="nav">
+        <a href="#" id="logo">Quick Credit</a>
+        <div class="overlay">
+          <a href="#" class="notification" id="notificationBox">
+            <i class="far fa-envelope"></i>
+            <span class="badge">0</span>
+          </a>
+
+          <div class="mobileNotify" id =>
+            <div class="imgcontainer">
+              <p class="title">No messages</p>
+            </div>
+          </div>
+          <ul>
+            <li class="show-avatar">
+              <a href="#"><img src="boy.png" alt="Avatar" class="avatar" /> </a>
+              <div class="dropdown-content">
+                <div class="imgcontainer">
+                  <img src="boy.png" alt="Avatar" class="avatar" />
+                  <h1>Jude Ezekiel</h1>
+                </div>
+              </div>
+
+              <div class="mobile-content">
+                <div class="imgcontainer">
+                  <img src="boy.png" alt="Avatar" class="avatar" />
+                  <h1 class="title">Jude Ezekiel</h1>
+                </div>
+              </div>
+            </li>
+
+            <li class="signout"><a href="index.html">Sign Out</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <h1 class="welcome-h1">Hi, Welcome back Jude <span>(Admin)</span></h1>
+    <!--Admin can view a specific loan application.-->
+    <section class="first-table">
+      <h1>Loan Table</h1>
+      <div class="tablename">
+        <table id="tables">
+          <thead>
+            <tr>
+              <th>Loan #id</th>
+              <th>Users Email</th>
+              <th>Amount</th>
+              <th>Date created</th>
+              <th>Verify user</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1000</td>
+              <td><a href="#">jude@gmail.com</a></td>
+              <td>500000</td>
+              <td>12/10/2009</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" id="switch1" checked />
+                  <span class="slider"></span>
+                </label>
+              </td>
+              <td>pending</td>
+            </tr>
+
+            <tr>
+              <td>1001</td>
+              <td><a href="#">admin@gmail.com</a></td>
+              <td>10000</td>
+              <td>12/15/2010</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" id="switch2" />
+
+                  <span class="slider"></span>
+                </label>
+              </td>
+              <td>pending</td>
+            </tr>
+            <tr>
+              <td>1006</td>
+              <td><a href="#">people@gmail.com</a></td>
+              <td>1000</td>
+              <td>10/12/2018</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" id="switch3" />
+                  <span class="slider"></span>
+                </label>
+              </td>
+              <td>approved</td>
+            </tr>
+            <tr>
+              <td>1006</td>
+              <td><a href="#">user@gmail.com</a></td>
+              <td>1000</td>
+              <td>10/12/2018</td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" id="switch4" />
+                  <span class="slider"></span>
+                </label>
+              </td>
+              <td>approved</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!--Admin can view all current loans (not fully repaid).
+    Admin can view all repaid loans.-->
+    <section class="cards">
+      <div id="viewCurrentButton" class="card">
+        <div class="container">
+          <i class="fas fa-binoculars card-icons"></i>
+          <h4><b>View current loans / repaid loans</b></h4>
+        </div>
+      </div>
+      <div id="paymentInFavour" class="card">
+        <div class="container">
+          <i class="far fa-credit-card card-icons"></i>
+          <h4><b>Post Repayment</b></h4>
+        </div>
+      </div>
+    </section>
+    <div class="modal" id="emptyModal">
+      <div class="modal-content animate" id="emptyModalContent"></div>
+      <div class="imgcontainer">
+        <span id="close3" class="close" title="Close Modal">×</span>
+      </div>
+    </div>
+    <!--Admin can mark a client as verified, after confirming his/her home and work address.
+Admin can approve or reject a client’s loan application.
+Admin can post loan repayment transaction in favour of a client.
+Admin can view all loan applications.
+Admin can view all current loans (not fully repaid).
+Admin can view all repaid loans.-->
+    <div class="modal" id="currentModal">
+      <div class="form-wrap" id="modal-container">
+        <div class="tabs">
+          <h3 class="currentloan-tab">
+            <a id="tabcurrent" class="active" href="#currentloan-tab-content"
+              >Current loans (Not fully repaid)</a
+            >
+          </h3>
+          <h3 class="repaidloan-tab">
+            <a id="tabrepaid" class="" href="#repaidloan-tab-content"
+              >Repaid Loan</a
+            >
+          </h3>
+        </div>
+        <!--.tabs-->
+
+        <div class="tabs-content">
+          <div id="currentloan-tab-content" class="active">
+            <h1>Not fully repaid Loans</h1>
+            <div class="tablename">
+              <table id="tables">
+                <thead>
+                  <tr>
+                    <th>Loan #id</th>
+                    <th>Users Email</th>
+                    <th>Amount</th>
+                    <th>Date created</th>
+
+                    <th>Amount paid</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1000</td>
+                    <td><a href="#">jude@gmail.com</a></td>
+                    <td>500000</td>
+                    <td>12/10/2009</td>
+
+                    <td>200000</td>
+                  </tr>
+
+                  <tr>
+                    <td>1001</td>
+                    <td><a href="#">admin@gmail.com</a></td>
+                    <td>10000</td>
+                    <td>12/15/2010</td>
+
+                    <td>5000</td>
+                  </tr>
+                  <tr>
+                    <td>1006</td>
+                    <td><a href="#">people@gmail.com</a></td>
+                    <td>1000</td>
+                    <td>10/12/2018</td>
+
+                    <td>200</td>
+                  </tr>
+                  <tr>
+                    <td>1026</td>
+                    <td><a href="#">andela@yahoo.com</a></td>
+                    <td>1000000</td>
+                    <td>10/12/2018</td>
+
+                    <td>80000</td>
+                  </tr>
+                  <tr>
+                    <td>1027</td>
+                    <td><a href="#">epic@gmail.com</a></td>
+                    <td>200000</td>
+                    <td>10/12/2018</td>
+
+                    <td>1900000</td>
+                  </tr>
+                  <tr>
+                    <td>1028</td>
+                    <td><a href="#">values@yahoo.com</a></td>
+                    <td>5000</td>
+                    <td>10/12/2018</td>
+
+                    <td>800</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--.login-form-->
+          </div>
+
+          <div id="repayloan-tab-content">
+            <h1>Repaid Loans</h1>
+            <div class="tablename">
+              <table id="tables">
+                <thead>
+                  <tr>
+                    <th>Loan #id</th>
+                    <th>Users Email</th>
+                    <th>Amount</th>
+                    <th>Date created</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1000</td>
+                    <td><a href="#">jude@gmail.com</a></td>
+                    <td>500000</td>
+                    <td>12/10/2009</td>
+                    <td><span class="paid">Paid</span></td>
+                  </tr>
+
+                  <tr>
+                    <td>1001</td>
+                    <td><a href="#">admin@gmail.com</a></td>
+                    <td>10000</td>
+                    <td>12/15/2010</td>
+                    <td><span class="paid">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td>1006</td>
+                    <td><a href="#">people@gmail.com</a></td>
+                    <td>1000</td>
+                    <td>10/12/2018</td>
+                    <td><span class="paid">Paid</span></td>
+                  </tr>
+                  <tr>
+                    <td>1006</td>
+                    <td><a href="#">user@gmail.com</a></td>
+                    <td>1000</td>
+                    <td>10/12/2018</td>
+                    <td><span class="paid">Paid</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--.tabs-content-->
+        </div>
+      </div>
+    </div>
+    <!--footer-->
+    <footer>
+      <div class="locations">
+        <h4>&copy 2019</h4>
+      </div>
+    </footer>
+    <script src="admin-dashboard.js"></script>
+  </body>
+</html>
