@@ -385,7 +385,7 @@ input[type="text"] {
 /* notification*/
 .notification {
   color: white;
-  top: -33rem;
+  top: -11rem;
   right: 10rem;
   position: relative;
   display: inline-block;
@@ -397,7 +397,8 @@ input[type="text"] {
 }
 .notification .badge {
   position: absolute;
-  right: 120px;
+  right: -10px;
+  top: 2rem;
   padding: 5px 10px;
   border-radius: 50%;
   background: red;
@@ -493,6 +494,17 @@ footer h4 {
     position: relative;
     left: 18rem;
     margin: 1rem 0 1rem 1rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .notification {
+    top: -33rem;
+    right: 70px;
+  }
+  .notification .badge {
+    position: relative;
+    top: -2rem;
+    right: 20px;
   }
 }
 
