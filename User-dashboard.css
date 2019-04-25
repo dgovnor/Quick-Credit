@@ -61,7 +61,7 @@ header {
   top: 3rem;
   right: 3rem;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 100;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -125,7 +125,7 @@ header {
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 9998;
+  z-index: 10;
   transition: opacity 650ms;
   transform: scale(0);
   opacity: 0;
