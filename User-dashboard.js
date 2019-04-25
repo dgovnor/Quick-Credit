@@ -1,3 +1,21 @@
+//functions
+const closed = (close, modal) => {
+  close.addEventListener("click", () => {
+    document.getElementById(modal).style.display = "none";
+  });
+};
+
+const showModal = (show, modal) => {
+  show.onclick = () => {
+    document.getElementById(modal).style.display = "block";
+  };
+};
+const Modal = modal => {
+  if (modal.style.display === "none") {
+    modal.style.display = "block";
+  } else modal.style.display = "none";
+};
+//
 let menu = document.querySelector(".menu");
 menu.addEventListener("click", () => {
   menu.classList.toggle("active");
@@ -5,39 +23,25 @@ menu.addEventListener("click", () => {
 });
 
 let viewTransactionButton = document.querySelector("#viewTransactionButton");
-viewTransactionButton.addEventListener("click", () => {
-  document.getElementById("viewTransactionModal").style.display = "block";
-});
+let applyLoanButton = document.querySelector("#applyLoanButton");
+let paymentButton = document.querySelector("#paymentButton");
+showModal(viewTransactionButton, "viewTransactionModal");
+showModal(applyLoanButton, "applyLoanModal");
+showModal(paymentButton, "paymentModal");
 
 let close = document.querySelector("#close");
-close.addEventListener("click", () => {
-  document.getElementById("viewTransactionModal").style.display = "none";
-});
-
-let applyLoanButton = document.querySelector("#applyLoanButton");
-applyLoanButton.addEventListener("click", () => {
-  document.getElementById("applyLoanModal").style.display = "block";
-});
 let close2 = document.querySelector("#close2");
-close2.addEventListener("click", () => {
-  document.getElementById("applyLoanModal").style.display = "none";
-});
 let close3 = document.querySelector("#close3");
-close3.addEventListener("click", () => {
-  document.getElementById("paymentModal").style.display = "none";
-});
-let paymentButton = document.querySelector("#paymentButton");
-paymentButton.addEventListener("click", () => {
-  document.getElementById("paymentModal").style.display = "block";
-});
+closed(close, "viewTransactionModal");
+closed(close2, "applyLoanModal");
+closed(close3, "paymentModal");
 
+//notification
 let notificationBox = document.querySelector("#notificationBox");
 let modalNotify = document.querySelector(".mobileNotify");
-notificationBox.addEventListener("click", () => {
-  if (modalNotify.style.display === "none") {
-    modalNotify.style.display = "block";
-  } else modalNotify.style.display = "none";
+notificationBox.onclick = () => {
+  Modal(modalNotify);
   window.addEventListener("resize", () => {
-    document.querySelector(".mobileNotify").style.display = "none";
+    modalNotify.style.display = "none";
   });
-});
+};
