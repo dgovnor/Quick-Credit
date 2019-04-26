@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none;
 }
 
 html {
@@ -246,6 +247,10 @@ div.card div.container {
 .imgcontainer img {
   padding: 1rem 0 2rem 0;
 }
+.imgcontainer a {
+  position: relative;
+  left: -4rem;
+}
 img.avatar {
   width: 20%;
   border-radius: 50%;
@@ -261,19 +266,7 @@ img.avatar {
 .imgcontainer a {
   width: 0%;
 }
-.close {
-  position: absolute;
-  right: 25px;
-  top: -30px;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -290,7 +283,7 @@ img.avatar {
   position: absolute;
   background-color: #f1f1f1;
   margin: 4rem;
-  right: -3rem;
+  right: 3rem;
   top: 4rem;
   width: 30rem;
   min-width: 150px;
@@ -348,13 +341,41 @@ img.avatar {
   border-radius: 1%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+.signout-content {
+  background-color: #fefefe;
+  margin: 20% auto 15% auto;
+  border: 1px solid #888;
+  justify-content: center;
+  display: grid;
+  width: 70%;
+  height: 40%;
+  transition: all 650ms;
+  font-size: 2rem;
+  border-radius: 1%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.signout-content h1 {
+  font-size: 3rem;
+  color: red;
+  padding: 2rem;
+  font-family: var(--main-font-family);
+}
+.signout-content span {
+  justify-content: space-around;
+  display: flex;
+}
+.signout-content span a {
+  color: var(--main-font-color);
+}
 .modal-content:hover,
-.loanmodal-content:hover {
+.loanmodal-content:hover,
+.signout-content:hover {
   transform: translateY(-3px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 .modal-content:active,
-.loanmodal-content:active {
+.loanmodal-content:active,
+.signout-content:active {
   transform: translateY(0);
   box-shadow: none;
 }
@@ -453,7 +474,7 @@ footer h4 {
   flex-wrap: wrap;
   margin: 0 -16px;
 }
-.col-50 {
+.paymentcontent {
   flex: 10%;
   padding: 5%;
 }
@@ -493,6 +514,7 @@ footer h4 {
   .imgcontainer a {
     position: relative;
     left: 18rem;
+    line-height: 0;
     margin: 1rem 0 1rem 1rem;
   }
 }
@@ -531,6 +553,11 @@ footer h4 {
   footer {
     margin-top: 44.5rem;
   }
+  .signout-content {
+    width: 50%;
+    position: relative;
+    margin: 1% auto auto auto;
+  }
   .modal-content {
     width: 50%;
   }
@@ -555,6 +582,11 @@ footer h4 {
     position: relative;
     top: -2rem;
     right: 20px;
+  }
+  .imgcontainer a {
+    color: var(--main-font-color);
+    left: 4rem;
+    float: left;
   }
   .nav {
     display: flex;

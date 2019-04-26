@@ -55,7 +55,7 @@
                   <p class="title">Company Name</p>
                   <p>123 bode thomas road</p>
                   <p>
-                    <span class="loan">Pending loan : <i> 2</i></span>
+                    <span class="loan">Active loan : <i> 1</i></span>
                   </p>
                   <p>
                     <span class="loan">Transaction balance :<i>200000</i></span>
@@ -73,7 +73,7 @@
                   <p class="title">Company Name</p>
                   <p>123 bode thomas road</p>
                   <p>
-                    <span class="loan">Pending loan : <i> 2</i></span>
+                    <span class="loan">Active loan : <i> 1</i></span>
                   </p>
                   <p>
                     <span class="loan">Transaction balance :<i>200000</i></span>
@@ -86,13 +86,12 @@
               </div>
             </li>
 
-            <li><a href="./index.html">Sign Out</a></li>
+            <li><a href="#signOutModal" id="signout">Sign Out</a></li>
           </ul>
         </div>
       </nav>
     </header>
     <h1 class="welcome-h1">Hi, Welcome back Jude</h1>
-
     <section class="cards">
       <div id="applyLoanButton" class="card">
         <div class="container">
@@ -118,8 +117,7 @@
       <div class="modal-content animate" action="/dashboard.html">
         <div class="imgcontainer">
           <h1>Transaction History</h1>
-          <span id="close" class="close" title="Close Modal">×</span>
-        </div>
+         </div>
         <div class="tablename">
           <table>
             <tr>
@@ -132,25 +130,25 @@
               <td>1000</td>
               <td>500000</td>
               <td>12/10/2009</td>
-              <td>pending</td>
+              <td>Pending</td>
             </tr>
             <tr>
               <td>1001</td>
               <td>10000</td>
               <td>12/15/2010</td>
-              <td>pending</td>
+              <td>paid</td>
             </tr>
             <tr>
               <td>1006</td>
               <td>1000</td>
               <td>10/12/2018</td>
-              <td>aprroved</td>
+              <td>Paid</td>
             </tr>
             <tr>
               <td>1006</td>
               <td>1000</td>
               <td>10/12/2018</td>
-              <td>aprroved</td>
+              <td>paid</td>
             </tr>
           </table>
         </div>
@@ -161,8 +159,7 @@
       <form class="loanmodal-content animate" action="#">
         <div class="imgcontainer">
           <h1>APPLY FOR LOAN</h1>
-          <span id="close2" class="close" title="Close Modal">×</span>
-        </div>
+           </div>
 
         <div class="container-login">
           <label><b>Username</b></label>
@@ -212,17 +209,16 @@
     <!--Modeal for Notification-->
     <!--Modeal for payment-->
     <div id="paymentModal" class="modal ">
-      <div class="loanmodal-content animate col-50" action="/dashboard.html">
+      <div class="loanmodal-content animate paymentcontent" action="/dashboard.html">
         <div class="imgcontainer">
           <h1>Payment</h1>
-          <span id="close3" class="close" title="Close Modal">×</span>
-        </div>
+            </div>
         <label for="fname">Accepted Cards</label>
         <div class="icon-container">
           <i class="fab fa-cc-visa visa"></i>
-          <i class="fab fa-cc-amex amex"></i>
+          <i class="fab fa-cc-stripe amex"></i>
           <i class="fab fa-cc-mastercard mastercard"></i>
-          <i class="fab fa-cc-discover discover"></i>
+          <i class="fab fa-cc-apple-pay discover"></i>
         </div>
         <label for="cname">Name on Card</label>
         <input
@@ -247,11 +243,11 @@
         />
 
         <div class="row">
-          <div class="col-50">
+          <div class="paymentcontent">
             <label for="expyear">Exp Year</label>
             <input type="text" id="expyear" name="expyear" placeholder="2018" />
           </div>
-          <div class="col-50">
+          <div class="paymentcontent">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" placeholder="***" />
           </div>
@@ -259,7 +255,15 @@
         <button class="login-btn" type="submit">Submit</button>
       </div>
     </div>
-
+    <div class="modal" id="signOutModal">
+      <div class="signout-content animate">
+        <h1>Are you sure you want to sign out</h1>
+        <span
+          ><a href="./index.html">Yes</a
+          ><a href="./User-dashboard.html">Cancel</a></span
+        >
+      </div>
+    </div>
     <!--footer-->
     <footer>
       <div class="locations">
