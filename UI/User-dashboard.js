@@ -1,3 +1,21 @@
+//functions
+const Modal = modal => {
+  let style = window.getComputedStyle(modal);
+  let display = style.getPropertyValue("display");
+  if (display === "none") {
+    modal.style.display = "block";
+  } else modal.style.display = "none";
+};
+
+const closeWindow = modal => {
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+};
+
+//toggle hambuger
 let menu = document.querySelector(".menu");
 menu.addEventListener("click", () => {
   menu.classList.toggle("active");
@@ -5,39 +23,39 @@ menu.addEventListener("click", () => {
 });
 
 let viewTransactionButton = document.querySelector("#viewTransactionButton");
+let viewTransactionModal = document.getElementById("viewTransactionModal");
 viewTransactionButton.addEventListener("click", () => {
-  document.getElementById("viewTransactionModal").style.display = "block";
-});
-
-let close = document.querySelector("#close");
-close.addEventListener("click", () => {
-  document.getElementById("viewTransactionModal").style.display = "none";
+  Modal(viewTransactionModal);
+  closeWindow(viewTransactionModal);
 });
 
 let applyLoanButton = document.querySelector("#applyLoanButton");
+let applyLoanModal = document.getElementById("applyLoanModal");
 applyLoanButton.addEventListener("click", () => {
-  document.getElementById("applyLoanModal").style.display = "block";
+  Modal(applyLoanModal);
+  closeWindow(applyLoanModal);
 });
-let close2 = document.querySelector("#close2");
-close2.addEventListener("click", () => {
-  document.getElementById("applyLoanModal").style.display = "none";
-});
-let close3 = document.querySelector("#close3");
-close3.addEventListener("click", () => {
-  document.getElementById("paymentModal").style.display = "none";
-});
+
 let paymentButton = document.querySelector("#paymentButton");
+let paymentModal = document.getElementById("paymentModal");
 paymentButton.addEventListener("click", () => {
-  document.getElementById("paymentModal").style.display = "block";
+  Modal(paymentModal);
+  closeWindow(paymentModal);
 });
 
 let notificationBox = document.querySelector("#notificationBox");
 let modalNotify = document.querySelector(".mobileNotify");
 notificationBox.addEventListener("click", () => {
-  if (modalNotify.style.display === "none") {
-    modalNotify.style.display = "block";
-  } else modalNotify.style.display = "none";
+  Modal(modalNotify);
   window.addEventListener("resize", () => {
     document.querySelector(".mobileNotify").style.display = "none";
   });
 });
+
+let signout = document.getElementById("signout");
+let signOutModal = document.getElementById("signOutModal");
+signout.onclick = () => {
+  Modal(signOutModal);
+  document.querySelector(".menu").classList.remove("active");
+  document.querySelector(".overlay").classList.toggle("menu-open");
+};
