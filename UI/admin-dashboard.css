@@ -241,14 +241,7 @@ img.avatar {
   width: 100%;
   top: 20%;
 }
-.tablename:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-}
-.tablename:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
+
 .tablename a {
   color: var(--main-font-dark-gray);
 }
@@ -411,7 +404,49 @@ div.card div.container {
   border-radius: 1%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-
+.modal-content2 {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  width: 100%;
+  height: auto;
+  transition: all 650ms;
+  border-radius: 1%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.signout-content {
+  background-color: #fefefe;
+  margin: 20% auto 15% auto;
+  border: 1px solid #888;
+  justify-content: center;
+  display: grid;
+  width: 70%;
+  height: 40%;
+  transition: all 650ms;
+  font-size: 2rem;
+  border-radius: 1%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+.signout-content h1 {
+  font-size: 3rem;
+  color: red;
+  padding: 2rem;
+  font-family: var(--main-font-family);
+}
+.signout-content span {
+  justify-content: space-around;
+  display: flex;
+}
+.modal-content2:hover,
+.signout-content:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+.modal-content2:active,
+.signout-content:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
 .imgcontainer {
   text-align: center;
   margin: 20px 0 10px 0;
@@ -422,20 +457,6 @@ div.card div.container {
   color: grey;
   font-size: 18px;
   padding: 2rem 0 1rem 0;
-}
-/*close*/
-.close {
-  position: absolute;
-  right: 25px;
-  top: -370px;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
 }
 
 /*Footer*/
@@ -539,9 +560,17 @@ footer h4 {
     position: relative;
     margin: 1% auto auto auto;
   }
-  .close {
-    right: 26%;
-    top: -330px;
+  .signout-content {
+    width: 50%;
+    position: relative;
+    margin: 1% auto auto auto;
+  }
+  .modal-content2 {
+    width: 70%;
+    margin: 1% auto auto auto;
+  }
+  .modal-content2 .tablename {
+    margin: 0 5rem 0 5rem;
   }
   .form-wrap {
     width: 70%;
@@ -591,6 +620,7 @@ footer h4 {
   .mobile-content {
     display: none;
   }
+
   .notification {
     position: relative;
     top: -1rem;
