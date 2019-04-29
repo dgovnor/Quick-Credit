@@ -1,6 +1,10 @@
 <<<<<<< HEAD
+node_modules
+=======
+<<<<<<< HEAD
 node_modules/
 build/
 .env
 .nyc_output/
 >>>>>>> 7b8132d82112ab477f301f3749222e92dc9fb1d0
+>>>>>>> 6ba6d8a28583c0d21c096383cb0b4e88abf8f7c7
