@@ -1,9 +1,12 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import app from "../app";
+import { getMaxListeners } from "cluster";
 
 chai.should();
 const SIGNUP = "/api/v1/auth/signup";
+const EMAIL = "billyjude@gmail.com";
+const LOGIN = "/api/v1/auth/signin";
 
 chai.use(chaiHttp);
 
@@ -350,5 +353,83 @@ describe(`POST ${SIGNUP}`, () => {
         );
         done();
       });
+  });
+});
+
+describe("User signin test", () => {
+  describe(`POST${LOGIN}`, () => {
+    it("Should return 200 if user signin successfully", done => {
+      const USER = {
+        email: "billyjude@gmail.com",
+        password: "combination"
+      };
+      chai
+        .request(app)
+        .post(LOGIN)
+        .send(USER)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("object");
+          res.body.should.have.property("data");
+          res.body.data.should.have.property("token");
+          res.body.data.should.have.property("status");
+          res.body.data.should.have.property("isAdmin");
+          done();
+        });
+    });
+
+    it("Should return 400 if user signin was unsuccessful", done => {
+      const USER = {
+        email: "biljude@gmail.com",
+        password: "combination"
+      };
+      chai
+        .request(app)
+        .post(LOGIN)
+        .send(USER)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.error.should.be.eql("Email or password is incorrect");
+          done();
+        });
+    });
+
+    it("Should return 400 if email is not ommited", done => {
+      const USER = {
+        email: "",
+        password: "combination"
+      };
+      chai
+        .request(app)
+        .post(LOGIN)
+        .send(USER)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.error.should.be.eql("Email is required");
+          done();
+        });
+    });
+
+    it("Should return 400 if password is ommited", done => {
+      const USER = {
+        email: "billyjude@gmail.com",
+        password: ""
+      };
+      chai
+        .request(app)
+        .post(LOGIN)
+        .send(USER)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.error.should.be.eql("Password is required");
+          done();
+        });
+    });
   });
 });
