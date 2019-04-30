@@ -43,7 +43,7 @@ class userValidation {
       .withMessage("Address is required")
       .trim()
       .isLength({ min: 10, max: 100 })
-      .withMessage("Name should be between 10 to 100 character long")
+      .withMessage("Address should be between 10 to 100 character long")
       .matches(/^[A-Za-z0-9\.\-\s\,]*$/)
       .withMessage("Invalid Address entered");
     const error = req.validationErrors();
