@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.use(expressValidate());
 
-const { signupUser } = UserControl;
-const { signupValidation } = UserValidate;
+const { signupUser, loginUser } = UserControl;
+const { signupValidation, loginValidation } = UserValidate;
 //const { verifyAdmin, verifyUser } = Authorisation;
 
 //default route
@@ -24,4 +24,6 @@ router.get("/api/v1", (req, res) =>
 //Create user account route
 router.post("/api/v1/auth/signup", signupValidation, signupUser);
 
+//login user route index
+router.post("/api/v1/auth/signin", loginValidation, loginUser);
 export default router;

@@ -56,5 +56,29 @@ class userValidation {
     //TODO check why no return to this next
     next();
   }
+
+  static loginValidation(req, res, next) {
+    req
+      .checkBody("email")
+      .notEmpty()
+      .withMessage("Email is required")
+      .trim()
+      .isEmail()
+      .withMessage("Invalid Email Address")
+      .customSanitizer(email => email.toLowerCase());
+    req
+      .checkBody("password")
+      .notEmpty()
+      .withMessage("Password is required");
+
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg
+      });
+    }
+    return next();
+  }
 }
 export default userValidation;
