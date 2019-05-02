@@ -1,22 +1,22 @@
-import bcrypt from "bcrypt";
-import jsonwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import bcrypt from 'bcrypt';
+import jsonwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-//create a class authenticator
+// create a class authenticator
 class Authenticator {
-  //TODO check if the payload can load without {}
+  // TODO check if the payload can load without {}
   /**
    * @description Creates the token
    * @param {object} payload - credential of user
    * @returns {string} access token
    */
   static token(payload) {
-    return jsonwt.sign({ payload }, process.env.SECRET, { expiresIn: 3600000 });
+    return jsonwt.sign({ payload }, process.env.SECRET, { expiresIn: '2h' });
   }
 
-  //TODO check if you can use decoded as a function in verifyToken
+  // TODO check if you can use decoded as a function in verifyToken
   /**
    * @description verifies the token
    * @param {string} token the token
@@ -25,6 +25,7 @@ class Authenticator {
   static verifyToken(token) {
     return jsonwt.verify(token, process.env.SECRET);
   }
+
   /**
    * @description The user password is hashed
    * @param {string} password - The password that will be hashed
@@ -33,6 +34,7 @@ class Authenticator {
   static makeHashPassword(password) {
     return bcrypt.hashSync(password, 12);
   }
+
   /**
    * @description Checks if the user password is valid by comparing the two param
    * @param {string} plainPassword

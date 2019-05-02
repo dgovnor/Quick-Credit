@@ -1,4 +1,4 @@
-import Authentic from "./authentication";
+import Authentic from './authentication';
 
 const { verifyToken } = Authentic;
 
@@ -12,23 +12,25 @@ class Authorisation {
    */
   static verifyAdmin(req, res, next) {
     try {
-      const token = req.headers.authorisation.split(" ")[1];
+      const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
       const decoded = verifyToken(token);
+      console.log(decoded);
       req.user = decoded.payload;
-      if (req.user.email !== "admin@quick-credit.com") {
+      if (req.user.email !== 'adminjude@quickcredit.com') {
         return res.status(403).send({
           status: 403,
-          error: "Only An admin can access this route"
+          error: 'Only An admin can access this route',
         });
       }
       return next();
     } catch (err) {
       return res.status(401).send({
         status: 401,
-        error: "NO or Invalid Token provided"
+        error: 'NO or Invalid Token provided',
       });
     }
   }
+
   /**
    *@description this verifies the user
    * @param {object} req The resquest Object
@@ -36,23 +38,26 @@ class Authorisation {
    * @param {function} next
    * @returns {object} Json APi response
    */
+
+  // eslint-disable-next-line class-methods-use-this
   verifyUser(req, res, next) {
     try {
-      const token = req.headers.authorization.split(" ")[1];
+      const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
       const decoded = verifyToken(token);
       req.user = decoded.payload;
 
       if (!req.user.id) {
         return res.status(403).send({
           status: 403,
-          error: "Only Authenticated User can access this route"
+          error: 'Only Authenticated User can access this route',
         });
       }
       return next();
     } catch (error) {
       return res.status(401).send({
         status: 401,
-        error: "Invalid or No token provided"
+        // eslint-disable-next-line quotes
+        error: "Invalid or No token provided",
       });
     }
   }
