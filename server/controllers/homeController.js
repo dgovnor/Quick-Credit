@@ -1,5 +1,4 @@
 import { users } from '../models/dataStructure';
-import { userdata } from '../models/testdata';
 import authenticate from '../auth/authentication';
 
 
@@ -47,21 +46,23 @@ class HomeController {
   }
 
   static loginUser(req, res) {
-    const { id, email, password } = req.body;
-    const indexOfEmail = userdata.findIndex(user => user.email === email);
-    const token = authenticate.token({
-      id,
-      email,
-      password,
-    });
+    const { email, password } = req.body;
+    const indexOfEmail = users.findIndex(user => user.email === email);
+
 
     if (indexOfEmail !== -1) {
+      const { id } = users[indexOfEmail];
+      const token = authenticate.token({
+        id,
+        email,
+        password,
+      });
       const checkPassword = authenticate.checkPassword(
         password,
-        userdata[indexOfEmail].password,
+        users[indexOfEmail].password,
       );
       if (checkPassword) {
-        const data = userdata[indexOfEmail];
+        const data = users[indexOfEmail];
         data.token = token;
         return res.status(200).send({
           message: 'Login Successful',

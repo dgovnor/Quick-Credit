@@ -89,6 +89,7 @@ class userValidation {
       .isEmail()
       .withMessage('invalid email')
       .customSanitizer(email => email.toLowerCase());
+
     const error = req.validationErrors();
     if (error) {
       return res.status(400).json({
@@ -96,6 +97,7 @@ class userValidation {
         error: error[0].msg,
       });
     }
+
     return next();
   }
 }

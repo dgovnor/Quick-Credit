@@ -1,5 +1,6 @@
 import Authentic from './authentication';
 
+
 const { verifyToken } = Authentic;
 
 class Authorisation {
@@ -14,9 +15,10 @@ class Authorisation {
     try {
       const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
       const decoded = verifyToken(token);
-      console.log(decoded);
+      const checkparams = req.params.id;
       req.user = decoded.payload;
-      if (req.user.email !== 'adminjude@quickcredit.com') {
+      // eslint-disable-next-line radix
+      if (req.user.email !== 'admin@quickcredit.com' || parseInt(checkparams) !== req.user.id) {
         return res.status(403).send({
           status: 403,
           error: 'Only An admin can access this route',
@@ -26,7 +28,7 @@ class Authorisation {
     } catch (err) {
       return res.status(401).send({
         status: 401,
-        error: 'NO or Invalid Token provided',
+        error: 'NO or Expired Token provided',
       });
     }
   }
