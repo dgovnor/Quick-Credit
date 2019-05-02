@@ -1,81 +1,99 @@
+/* eslint-disable consistent-return */
 class userValidation {
   static signupValidation(req, res, next) {
     req
-      .checkBody("email")
+      .checkBody('email')
       .notEmpty()
-      .withMessage("Email is required")
+      .withMessage('Email is required')
       .trim()
       .isEmail()
-      .withMessage("Invalid Email address")
+      .withMessage('Invalid Email address')
       .customSanitizer(email => email.toLowerCase());
 
     req
-      .checkBody("firstName")
+      .checkBody('firstName')
       .notEmpty()
-      .withMessage("First name is required")
+      .withMessage('First name is required')
       .trim()
       .isLength({ min: 3, max: 15 })
-      .withMessage("Name should be between 3 to 15 character long")
+      .withMessage('Name should be between 3 to 15 character long')
       .isAlpha()
-      .withMessage("Name should only contain alphabets");
+      .withMessage('Name should only contain alphabets');
 
     req
-      .checkBody("lastName")
+      .checkBody('lastName')
       .notEmpty()
-      .withMessage("last name is required")
+      .withMessage('last name is required')
       .trim()
       .isLength({ min: 3, max: 15 })
-      .withMessage("Name should be between 3 to 15 character long")
+      .withMessage('Name should be between 3 to 15 character long')
       .isAlpha()
-      .withMessage("Name should only contain alphabets");
+      .withMessage('Name should only contain alphabets');
 
     req
-      .checkBody("password")
+      .checkBody('password')
       .notEmpty()
-      .withMessage("Password is required")
+      .withMessage('Password is required')
       .trim()
       .isLength({ min: 8, max: 15 })
-      .withMessage("Password should be between 8 to 15 character long");
+      .withMessage('Password should be between 8 to 15 character long');
 
     req
-      .checkBody("address")
+      .checkBody('address')
       .notEmpty()
-      .withMessage("Address is required")
+      .withMessage('Address is required')
       .trim()
       .isLength({ min: 10, max: 100 })
-      .withMessage("Address should be between 10 to 100 character long")
+      .withMessage('Address should be between 10 to 100 character long')
+      // eslint-disable-next-line no-useless-escape
       .matches(/^[A-Za-z0-9\.\-\s\,]*$/)
-      .withMessage("Invalid Address entered");
+      .withMessage('Invalid Address entered');
     const error = req.validationErrors();
     if (error) {
       return res.status(400).json({
         status: 400,
-        error: error[0].msg
+        error: error[0].msg,
       });
     }
-    //TODO check why no return to this next
+    // TODO check why no return to this next
     next();
   }
 
   static loginValidation(req, res, next) {
     req
-      .checkBody("email")
+      .checkBody('email')
       .notEmpty()
-      .withMessage("Email is required")
+      .withMessage('Email is required')
       .trim()
       .isEmail()
-      .withMessage("Invalid Email Address")
+      .withMessage('Invalid Email Address')
       .customSanitizer(email => email.toLowerCase());
     req
-      .checkBody("password")
+      .checkBody('password')
       .notEmpty()
-      .withMessage("Password is required");
+      .withMessage('Password is required');
 
     const error = req.validationErrors();
     if (error) {
       return res.status(400).json({
         status: 400,
-        error: error[0].msg
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
+
+  static adminVerifyUserValidation(req, res, next) {
+    req
+      .checkParams('email')
+      .isEmail()
+      .withMessage('invalid email')
+      .customSanitizer(email => email.toLowerCase());
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
       });
     }
     return next();
