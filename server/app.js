@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import express from 'express';
 import bodyParser from 'body-parser';
 import homeRoute from './routes/homeRoute';
