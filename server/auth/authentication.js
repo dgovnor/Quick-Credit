@@ -13,7 +13,7 @@ class Authenticator {
    * @returns {string} access token
    */
   static token(payload) {
-    return jsonwt.sign({ payload }, process.env.SECRET, { expiresIn: '2h' });
+    return jsonwt.sign({ payload }, process.env.SECRET || 'secret', { expiresIn: '2h' });
   }
 
   // TODO check if you can use decoded as a function in verifyToken
