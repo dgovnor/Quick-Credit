@@ -23,7 +23,7 @@ class Authenticator {
    * @returns {object} payload- the decoded access token
    */
   static verifyToken(token) {
-    return jsonwt.verify(token, process.env.SECRET);
+    return jsonwt.verify(token, process.env.SECRET || 'secret');
   }
 
   /**
