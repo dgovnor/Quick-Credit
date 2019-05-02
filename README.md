@@ -1,2 +1,2 @@
 # Quick-Credit
-https://travis-ci.org/dgovnor/Quick-Credit.svg?branch=develop
+[![Build Status](https://travis-ci.org/dgovnor/Quick-Credit.svg?branch=develop)](https://travis-ci.org/dgovnor/Quick-Credit)
