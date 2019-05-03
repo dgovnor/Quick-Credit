@@ -1,7 +1,6 @@
 import { userdata } from '../models/testdata';
 
 class AdminController {
-  // eslint-disable-next-line consistent-return
   static adminVerifyUser(req, res) {
     const { email } = req.params;
     const userData = userdata.find(user => user.email === email);

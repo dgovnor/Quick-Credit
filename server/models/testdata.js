@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const userdata = [
   {
     id: 1,
@@ -20,4 +19,48 @@ export const userdata = [
     status: 'unverified',
     isAdmin: false,
   },
+  {
+    id: 3,
+    email: 'andela2@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
+  {
+    id: 4,
+    email: 'andela3@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
+  {
+    id: 5,
+    email: 'andela4@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
+];
+
+export const loanData = [{
+  id: 'Integer',
+  user: 'String',
+  createdOn: 'DateTime',
+  status: 'String',
+  repaid: 'Boolean',
+  tenor: 'Integer',
+  amount: 'Float',
+  paymentInstallment: 'Float',
+  balance: 'Float',
+  interest: 'Float',
+},
 ];

@@ -1,9 +1,7 @@
-import { userdata } from './testdata';
+import { userdata, loanData } from './testdata';
 
 export const users = [];
-// eslint-disable-next-line no-unused-vars
-const loans = [];
-// eslint-disable-next-line no-unused-vars
+export const loans = [];
 const repayment = [];
 
 export const addDefaultUser = () => {
@@ -12,6 +10,11 @@ export const addDefaultUser = () => {
   });
 };
 
+export const addLoan = () => {
+  loanData.forEach((element) => {
+    loans.push(element);
+  });
+};
 const defaultAdmin = {
   id: 100,
   email: 'admin@quickcredit.com',

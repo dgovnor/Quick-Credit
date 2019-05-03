@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import homeRoute from './routes/homeRoute';
 import adminRoute from './routes/adminRoute';
+import userRoute from './routes/userRoute';
 
 // set up express app
 const app = express();
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', homeRoute);
 app.use('/api/v1', homeRoute);
+app.use('/api/v1/user', userRoute);
 app.use('/api/v1/admin', adminRoute);
 
 // Wrong endpoints
