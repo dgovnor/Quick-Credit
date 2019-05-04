@@ -7,9 +7,10 @@ class UserController {
     } = req.body;
     const id = loans.length + 100;
     const status = 'Pending';
-    const interest = 0.05 * amount;
-    const paymentInstallment = (amount + interest) / tenor;
-    const balance = amount;
+    const interest = 0.05 * parseInt(amount, 10);
+    const repaid = false;
+    const paymentInstallment = (parseInt(amount, 10) + interest) / parseInt(tenor, 10);
+    const balance = parseInt(amount, 10) + interest;
 
     const data = {
       id,
@@ -20,6 +21,7 @@ class UserController {
       amount,
       paymentInstallment,
       status,
+      repaid,
       balance,
       interest,
     };

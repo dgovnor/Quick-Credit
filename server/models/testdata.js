@@ -52,15 +52,14 @@ export const userdata = [
 ];
 
 export const loanData = [{
-  id: 'Integer',
-  user: 'String',
+  id: 50,
+  user: 'andela@gmail.com',
   createdOn: 'DateTime',
-  status: 'String',
-  repaid: 'Boolean',
-  tenor: 'Integer',
-  amount: 'Float',
-  paymentInstallment: 'Float',
-  balance: 'Float',
-  interest: 'Float',
-},
-];
+  status: 'pending',
+  repaid: 'false',
+  tenor: 12,
+  amount: 20000,
+  paymentInstallment: 166666.6,
+  balance: 20000,
+  interest: 1000.0,
+}];
