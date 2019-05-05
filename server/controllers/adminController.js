@@ -1,11 +1,11 @@
-import { userdata } from '../models/testdata';
-import { loanRepayment, loans } from '../models/dataStructure';
+import { users, loanRepayment, loans } from '../models/dataStructure';
+
 
 class AdminController {
   static adminVerifyUser(req, res) {
     const { email } = req.params;
-    const userData = userdata.find(user => user.email === email);
-
+    const userDataIndex = users.findIndex(user => user.email === email);
+    const userData = users[userDataIndex];
     if (userData) {
       userData.status = 'verified';
 
@@ -83,6 +83,45 @@ class AdminController {
       error: 'Loan application not found',
     });
   }
+
+  // Admin approves or rejects loan request
+  static approveOrRejectLoan(req, res) {
+    const { loanid } = req.params;
+    const { decision } = req.body;
+    const loanresult2 = loans.findIndex(loan => loan.id === parseInt(loanid, 10));
+    const loanresult = loans[loanresult2];
+    if (loanresult) {
+      const userresult = users.find(user => user.email === loanresult.email);
+      if (userresult.status === 'verified') {
+        if (loanresult) {
+          loanresult.status = decision;
+
+          const newLoanData = {
+            loanId: loanresult.id,
+            loanAmount: loanresult.amount,
+            tenor: loanresult.tenor,
+            status: loanresult.status,
+            monthlyInstallment: loanresult.paymentInstallment,
+            interest: loanresult.interest,
+          };
+
+          return res.status(200).send({
+            status: 200,
+            data: newLoanData,
+          });
+        }
+      }
+      return res.status(400).send({
+        status: 400,
+        error: 'User is not yet verified',
+      });
+    }
+    return res.status(404).send({
+      status: 404,
+      error: 'This loan doesn\'t exist',
+    });
+  }
 }
+
 
 export default AdminController;

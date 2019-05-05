@@ -49,6 +49,36 @@ export const userdata = [
     status: 'unverified',
     isAdmin: false,
   },
+  {
+    id: 6,
+    email: 'andela5@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
+  {
+    id: 7,
+    email: 'andela6@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
+  {
+    id: 8,
+    email: 'andela7@gmail.com',
+    firstName: 'Andela',
+    lastName: 'anthony',
+    password: '$2b$12$.PBmTYCHeluKXK.hF/Z14ehY1499NTAIiw51h8qohXOMKwCog1juK',
+    address: '34 anthony road',
+    status: 'unverified',
+    isAdmin: false,
+  },
 ];
 
 export const loanData = [{

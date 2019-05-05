@@ -2,35 +2,6 @@
 class LoanValidation {
   static userLoanValidation(req, res, next) {
     req
-      .checkBody('email')
-      .notEmpty()
-      .withMessage('Email is required')
-      .trim()
-      .isEmail()
-      .withMessage('Invalid Email address')
-      .customSanitizer(email => email.toLowerCase());
-
-    req
-      .checkBody('firstName')
-      .notEmpty()
-      .withMessage('First name is required')
-      .trim()
-      .isLength({ min: 3, max: 15 })
-      .withMessage('Name should be between 3 to 15 character long')
-      .isAlpha()
-      .withMessage('Name should only contain alphabets');
-
-    req
-      .checkBody('lastName')
-      .notEmpty()
-      .withMessage('Last name is required')
-      .trim()
-      .isLength({ min: 3, max: 15 })
-      .withMessage('Name should be between 3 to 15 character long')
-      .isAlpha()
-      .withMessage('Name should only contain alphabets');
-
-    req
       .checkBody('amount')
       .notEmpty()
       .withMessage('Amount is required')
