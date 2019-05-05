@@ -195,12 +195,9 @@ describe('User can apply for loan', () => {
         res.body.data.should.have.property('token');
 
         const {
-          id, firstName, lastName, email, token,
+          id, token,
         } = res.body.data;
         const applyLoan = {
-          firstName,
-          lastName,
-          email,
           amount: 200000,
           tenor: 12,
         };
@@ -213,121 +210,6 @@ describe('User can apply for loan', () => {
             response.body.should.be.a('object');
             response.should.have.status(201);
             response.body.should.have.property('data');
-            done();
-          });
-      });
-  });
-
-  it('Should return 400 if application first name is emmitted', (done) => {
-    const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
-    };
-    chai
-      .request(app)
-      .post(LOGIN)
-      .send(USER)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('data');
-        res.body.data.should.have.property('token');
-        const {
-          id, lastName, email, token,
-        } = res.body.data;
-        const applyLoan = {
-
-          lastName,
-          email,
-          amount: 200000,
-          tenor: 12,
-        };
-        chai
-          .request(app)
-          .post(`/api/v1/user/${id}/loans`)
-          .set('authorization', token)
-          .send(applyLoan)
-          .end((_err, response) => {
-            response.should.have.status(400);
-            response.body.should.be.a('object');
-            response.body.should.have.property('error');
-            response.body.error.should.eql('First name is required');
-            done();
-          });
-      });
-  });
-
-  it('Should return 400 if application last name is emmitted', (done) => {
-    const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
-    };
-    chai
-      .request(app)
-      .post(LOGIN)
-      .send(USER)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('data');
-        res.body.data.should.have.property('token');
-        const {
-          id, firstName, email, token,
-        } = res.body.data;
-        const applyLoan = {
-          firstName,
-          email,
-          amount: 200000,
-          tenor: 12,
-        };
-        chai
-          .request(app)
-          .post(`/api/v1/user/${id}/loans`)
-          .set('authorization', token)
-          .send(applyLoan)
-          .end((_err, response) => {
-            response.body.should.be.a('object');
-            response.should.have.status(400);
-            response.body.should.have.property('error');
-            response.body.error.should.eql('Last name is required');
-            done();
-          });
-      });
-  });
-
-  it('Should return 400 if application email is emmitted', (done) => {
-    const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
-    };
-    chai
-      .request(app)
-      .post(LOGIN)
-      .send(USER)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('data');
-        res.body.data.should.have.property('token');
-        const {
-          id, firstName, lastName, token,
-        } = res.body.data;
-        const applyLoan = {
-          firstName,
-          lastName,
-          amount: 200000,
-          tenor: 12,
-        };
-        chai
-          .request(app)
-          .post(`/api/v1/user/${id}/loans`)
-          .set('authorization', token)
-          .send(applyLoan)
-          .end((_err, response) => {
-            response.body.should.be.a('object');
-            response.should.have.status(400);
-            response.body.should.have.property('error');
-            response.body.error.should.eql('Email is required');
             done();
           });
       });

@@ -25,5 +25,24 @@ class AdminValidation {
     }
     return next();
   }
+
+  static approveOrRejectValidation(req, res, next) {
+    req
+      .checkBody('decision')
+      .notEmpty()
+      .withMessage('Approved or rejected')
+      .customSanitizer(decision => decision.toLowerCase())
+      .isIn(['approved', 'rejected'])
+      .withMessage('Either approved or rejected');
+
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(404).json({
+        status: 404,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
 }
 export default AdminValidation;
