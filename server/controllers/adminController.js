@@ -150,6 +150,35 @@ class AdminController {
       data: getloan,
     });
   }
+
+  // Get specific loan of users
+  static getSpecificLoan(req, res) {
+    const { loanid } = req.params;
+    const loanresult = loans.find(loan => loan.id === parseInt(loanid, 10));
+    if (loanresult) {
+      const getloan = {
+        id: loanresult.id,
+        user: loanresult.email,
+        createdOn: new Date(),
+        status: loanresult.status,
+        repaid: loanresult.repaid,
+        tenor: loanresult.tenor,
+        amount: loanresult.amount,
+        paymentInstallment: loanresult.paymentInstallment,
+        balance: loanresult.balance,
+        interest: loanresult.interest,
+      };
+
+      return res.status(200).send({
+        status: 200,
+        data: getloan,
+      });
+    }
+    return res.status(404).send({
+      status: 404,
+      error: 'Loan not found',
+    });
+  }
 }
 
 
