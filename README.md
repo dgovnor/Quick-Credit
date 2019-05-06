@@ -16,7 +16,7 @@ We are Quick Credit, a lending company with customers in 36 states in Nigeria. W
 
 # UI Templates
 
-Preview UI templates :+1: [Github Pages](/UI/index.html)
+Preview UI templates [Github Pages/UI/index.html](/)
 
 # Pivotal Tracker ID
 https://www.pivotaltracker.com/n/projects/2326523
