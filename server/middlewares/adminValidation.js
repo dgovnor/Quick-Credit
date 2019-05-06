@@ -47,6 +47,9 @@ class AdminValidation {
 
   static getSpecificLoanValidation(req, res, next) {
     req
+      .checkParams('loanid')
+      .notEmpty()
+      .withMessage('Loan not found')
       .isNumeric()
       .withMessage('Loan not found');
     const error = req.validationErrors();
