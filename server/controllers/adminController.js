@@ -121,6 +121,35 @@ class AdminController {
       error: 'This loan doesn\'t exist',
     });
   }
+
+  // Get loan of users
+  static getLoan(req, res) {
+    const getloan = loans.map((element) => {
+      const eachloan = {
+        id: element.id,
+        user: element.email,
+        createdOn: new Date(),
+        status: element.status,
+        repaid: element.repaid,
+        tenor: element.tenor,
+        amount: element.amount,
+        paymentInstallment: element.paymentInstallment,
+        balance: element.balance,
+        interest: element.interest,
+      };
+      return eachloan;
+    });
+    if (loans.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'No loan found',
+      });
+    }
+    return res.status(200).send({
+      status: 200,
+      data: getloan,
+    });
+  }
 }
 
 

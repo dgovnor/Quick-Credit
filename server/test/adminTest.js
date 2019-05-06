@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 // Testing signup route
 describe('Admin verify user', () => {
-  it('Should return 200 if admin is verified', (done) => {
+  it('Should return 200 if admin is verified and can verify user', (done) => {
     const USER = {
       email: 'admin@quickcredit.com',
       password: 'combination',
