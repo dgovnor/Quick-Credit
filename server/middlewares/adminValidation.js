@@ -44,5 +44,19 @@ class AdminValidation {
     }
     return next();
   }
+
+  static getSpecificLoanValidation(req, res, next) {
+    req
+      .isNumeric()
+      .withMessage('Loan not found');
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(404).json({
+        status: 404,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
 }
 export default AdminValidation;

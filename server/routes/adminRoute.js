@@ -10,10 +10,11 @@ const adminRouter = express.Router();
 adminRouter.use(expressValidate());
 
 const {
- adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getLoan 
+  adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getLoan, getSpecificLoan,
 } = UserControl;
 const { adminVerifyUserValidation } = UserValidate;
-const { repaymentLoanValidation, approveOrRejectValidation } = adminValidate;
+// eslint-disable-next-line max-len
+const { repaymentLoanValidation, approveOrRejectValidation, getSpecificLoanValidation } = adminValidate;
 const { verifyAdmin, validateToken } = Authorisation;
 
 adminRouter.patch(
@@ -38,10 +39,18 @@ adminRouter.patch(
   approveOrRejectLoan,
 );
 adminRouter.get(
+  '/:id/loans/:loanid',
+  validateToken,
+  verifyAdmin,
+  getSpecificLoanValidation,
+  getSpecificLoan,
+);
+adminRouter.get(
   '/:id/loans',
   validateToken,
   verifyAdmin,
   getLoan,
 );
+
 
 export default adminRouter;
