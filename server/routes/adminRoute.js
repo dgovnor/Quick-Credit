@@ -13,8 +13,9 @@ const {
   adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getLoan, getSpecificLoan,
 } = UserControl;
 const { adminVerifyUserValidation } = UserValidate;
-// eslint-disable-next-line max-len
-const { repaymentLoanValidation, approveOrRejectValidation, getSpecificLoanValidation } = adminValidate;
+const {
+  repaymentLoanValidation, approveOrRejectValidation, getSpecificLoanValidation, getLoanValidation,
+} = adminValidate;
 const { verifyAdmin, validateToken } = Authorisation;
 
 adminRouter.patch(
@@ -49,6 +50,7 @@ adminRouter.get(
   '/:id/loans',
   validateToken,
   verifyAdmin,
+  getLoanValidation,
   getLoan,
 );
 

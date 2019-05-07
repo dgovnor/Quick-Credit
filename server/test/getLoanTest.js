@@ -52,7 +52,7 @@ describe('Admin can get all kinds of loan', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 100;
+        const loanid = 578;
         chai
           .request(app)
           .get(`/api/v1/admin/${id}/loans/${loanid}`)
@@ -119,6 +119,91 @@ describe('Admin can get all kinds of loan', () => {
             response.body.should.be.a('object');
             response.body.should.have.property('error');
             response.body.error.should.be.eql('Loan not found');
+          });
+        done();
+      });
+  });
+  it('should return 200 if admin gets loan with status approved and repaid false', (done) => {
+    const USER = {
+      email: 'admin@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/loans?status=approved&repaid=${false}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a('object');
+            response.body.should.have.property('data');
+          });
+        done();
+      });
+  });
+  it('should return 200 if admin gets loan with status approved and repaid true', (done) => {
+    const USER = {
+      email: 'admin@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/loans?status=approved&repaid=${true}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a('object');
+            response.body.should.have.property('data');
+          });
+        done();
+      });
+  });
+  it('should return 400 if query keys isn\'t status and repaid', (done) => {
+    const USER = {
+      email: 'admin@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/loans?house=approved&repaid=${true}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(400);
+            response.body.should.be.a('object');
+            response.body.should.have.property('error');
+            response.body.error.should.be.eql('Query must be status and repaid');
           });
         done();
       });

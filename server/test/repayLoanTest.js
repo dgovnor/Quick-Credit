@@ -61,8 +61,8 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 100;
-        const amount = { amount: 100000 };
+        const loanid = 678;
+        const amount = { amount: 100 };
         chai
           .request(app)
           .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)
@@ -92,7 +92,7 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 100;
+        const loanid = 678;
         const amount = { amount: 200000 };
         chai
           .request(app)
@@ -190,8 +190,8 @@ describe('Admin post repayment', () => {
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
 
-        const loanid = 100;
-        const amount = { amount: 110000 };
+        const loanid = 578;
+        const amount = { amount: 1000 };
         chai
           .request(app)
           .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)

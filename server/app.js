@@ -15,10 +15,9 @@ app.use('/api/v1/user', userRoute);
 app.use('/api/v1/admin', adminRoute);
 
 // Wrong endpoints
-
-app.all('*', (_req, res) => res.status(404).send({
+app.use((_req, res) => res.status(404).send({
   status: 404,
-  error: "Endpoint doesn't Exist!",
+  error: 'URL doesn\'t exist, Please check again ',
 }));
 
 const PORT = process.env.PORT || 3002;

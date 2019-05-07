@@ -1,4 +1,4 @@
-import { userdata, loanData } from './testdata';
+import { userdata } from './testdata';
 
 export const users = [];
 export const loans = [];
@@ -36,3 +36,37 @@ const defaultUser = {
   isAdmin: false,
 };
 users.push(defaultUser);
+
+const defaultLoan = {
+  id: 578,
+  firstName: 'jude',
+  lastName: 'kljdflk',
+  email: 'jude2@gmail.com',
+  tenor: 12,
+  createdOn: new Date(),
+  amount: 20000,
+  interest: 20,
+  paymentInstallment: 5,
+  status: 'approved',
+  repaid: true,
+  balance: 1000,
+
+};
+loans.push(defaultLoan);
+
+const defaultLoan2 = {
+  id: 678,
+  firstName: 'chie',
+  lastName: 'kljdflk',
+  email: 'jude4@gmail.com',
+  tenor: 12,
+  createdOn: new Date(),
+  amount: 20000,
+  interest: 20,
+  paymentInstallment: 5,
+  status: 'approved',
+  repaid: false,
+  balance: 1000,
+
+};
+loans.push(defaultLoan2);
