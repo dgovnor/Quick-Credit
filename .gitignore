@@ -3,3 +3,4 @@ build/
 .env
 .nyc_output/
 coverage/
+build/
