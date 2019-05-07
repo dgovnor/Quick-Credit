@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit",
-    "start": "nodemon --exec babel-node server/app.js",
+    "start": "node build/app.js",
+    "start-dev": "nodemon --exec babel-node server/app.js",
     "build": "babel server --out-dir build",
     "coveralls": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rn -rf ./coverage"
   },
