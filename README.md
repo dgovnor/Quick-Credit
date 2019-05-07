@@ -2,7 +2,7 @@
 
 Quick Credit, a lending company we are dedicated to helping our customers borrow and invest funds. We offer a fully digital experience by providing credit to salary earners in Nigerian through their employer or individually.
 
-[![Build Status](https://travis-ci.org/dgovnor/Quick-Credit.svg?branch=develop)](https://travis-ci.org/dgovnor/Quick-Credit)
+[![Build Status](https://travis-ci.org/dgovnor/Quick-Credit.svg?branch=develop)](https://travis-ci.org/dgovnor/Quick-Credit) [![Test Coverage](https://api.codeclimate.com/v1/badges/123ae50e0da75177f055/test_coverage)](https://codeclimate.com/github/dgovnor/Quick-Credit/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/123ae50e0da75177f055/maintainability)](https://codeclimate.com/github/dgovnor/Quick-Credit/maintainability) [![Coverage Status](https://coveralls.io/repos/github/dgovnor/Quick-Credit/badge.svg)](https://coveralls.io/github/dgovnor/Quick-Credit)
 
 # Introuction
 ## _Project Overview_
