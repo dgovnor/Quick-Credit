@@ -8,7 +8,7 @@ const userRouter = express.Router();
 
 userRouter.use(expressValidate());
 
-const { applyForLoan } = UserControl;
+const { applyForLoan, getRepaymentLoan } = UserControl;
 const { userLoanValidation } = LoanValidate;
 const { verifyUser, validateToken } = Authorisation;
 
@@ -20,4 +20,10 @@ userRouter.post(
   applyForLoan,
 );
 
+userRouter.get(
+  '/:id/loans/:loanid/repayments',
+  validateToken,
+  verifyUser,
+  getRepaymentLoan,
+);
 export default userRouter;
