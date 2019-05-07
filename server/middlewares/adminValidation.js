@@ -61,5 +61,28 @@ class AdminValidation {
     }
     return next();
   }
+
+  static getLoanValidation(req, res, next) {
+    req
+      .checkQuery('status')
+      .isIn('approved')
+      .withMessage('Bad request')
+      .optional();
+
+    req
+      .checkQuery('repaid')
+      .isBoolean()
+      .withMessage('Bad request')
+      .optional();
+
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
 }
 export default AdminValidation;

@@ -60,9 +60,8 @@ describe('Admin approves or reject loan', () => {
                     response3.body.should.be.a('object');
                     response3.should.have.status(201);
                     response3.body.should.have.property('data');
-
                     const { id, token } = res.body.data;
-                    const loanid = 100;
+                    const loanid = response3.body.data.id;
                     const decision = { decision: 'approved' };
                     chai
                       .request(app)
@@ -134,7 +133,7 @@ describe('Admin approves or reject loan', () => {
                     response3.body.should.have.property('data');
 
                     const { id, token } = res.body.data;
-                    const loanid = 101;
+                    const loanid = response3.body.data.id;
                     const decision = { decision: 'approved' };
                     chai
                       .request(app)

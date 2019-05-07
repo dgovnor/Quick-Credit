@@ -12,24 +12,19 @@ class UserController {
     req.payload = decoded.payload;
     const { email } = req.payload;
     const user = users.find(use => use.email === email);
-    const id = loans.length + 100;
-    const status = 'Pending';
     const interest = 0.05 * parseInt(amount, 10);
-    const repaid = false;
-    const paymentInstallment = (parseInt(amount, 10) + interest) / parseInt(tenor, 10);
-    const balance = parseInt(amount, 10) + interest;
-
     const data = {
-      id,
+      id: loans.length + 100,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       tenor,
+      createdOn: new Date(),
       amount,
-      paymentInstallment,
-      status,
-      repaid,
-      balance,
+      paymentInstallment: (parseInt(amount, 10) + interest) / parseInt(tenor, 10),
+      status: 'Pending',
+      repaid: false,
+      balance: parseInt(amount, 10) + interest,
       interest,
     };
     if (loans.find(loan => loan.email === email)) {

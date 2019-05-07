@@ -124,21 +124,30 @@ class AdminController {
 
   // Get loan of users
   static getLoan(req, res) {
-    const getloan = loans.map((element) => {
-      const eachloan = {
-        id: element.id,
-        user: element.email,
-        createdOn: new Date(),
-        status: element.status,
-        repaid: element.repaid,
-        tenor: element.tenor,
-        amount: element.amount,
-        paymentInstallment: element.paymentInstallment,
-        balance: element.balance,
-        interest: element.interest,
-      };
-      return eachloan;
-    });
+    const { status, repaid } = req.query;
+    const queryKeys = Object.keys(req.query);
+    if ((Object.keys(req.query).length) && (queryKeys[0] !== 'status' || queryKeys[1] !== 'repaid')) {
+      return res.status(400).send({
+        status: 400,
+        error: 'Query must be status and repaid',
+      });
+    }
+    if (status && repaid) {
+      const checkLoans = loans.filter(loan => loan.status === status
+        && loan.repaid.toString() === repaid);
+      if (checkLoans && checkLoans.length) {
+        return res.status(200).send({
+          status: 200,
+          data: checkLoans,
+        });
+      }
+      if (checkLoans.length === 0) {
+        return res.status(400).send({
+          status: 400,
+          error: 'No loan found',
+        });
+      }
+    }
     if (loans.length < 1) {
       return res.status(404).send({
         status: 404,
@@ -147,7 +156,7 @@ class AdminController {
     }
     return res.status(200).send({
       status: 200,
-      data: getloan,
+      data: loans,
     });
   }
 
