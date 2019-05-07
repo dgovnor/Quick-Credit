@@ -209,3 +209,91 @@ describe('Admin can get all kinds of loan', () => {
       });
   });
 });
+describe('User can get Loan repayment history', () => {
+  it('should return 200 if user gets loan repayment', (done) => {
+    const USER = {
+      email: 'jude4@gmail.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const loanid = 678;
+        chai
+          .request(app)
+          .get(`/api/v1/user/${id}/loans/${loanid}/repayments`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a('object');
+            response.body.should.have.property('data');
+          });
+        done();
+      });
+  });
+  it('should return 400 if user doesn\'t have loan repayment', (done) => {
+    const USER = {
+      email: 'jude4@gmail.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const loanid = 670;
+        chai
+          .request(app)
+          .get(`/api/v1/user/${id}/loans/${loanid}/repayments`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(400);
+            response.body.should.be.a('object');
+            response.body.should.have.property('error');
+            response.body.error.should.be.eql('No loan repayment history');
+          });
+        done();
+      });
+  });
+  it('should return 403 if user loan email is not correct', (done) => {
+    const USER = {
+      email: 'jude@gmail.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const loanid = 678;
+        chai
+          .request(app)
+          .get(`/api/v1/user/${id}/loans/${loanid}/repayments`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(403);
+            response.body.should.be.a('object');
+            response.body.should.have.property('error');
+            response.body.error.should.be.eql('Unauthorized User');
+          });
+        done();
+      });
+  });
+});

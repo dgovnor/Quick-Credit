@@ -1,4 +1,4 @@
-import { loans, users } from '../models/dataStructure';
+import { loans, users, loanRepayment } from '../models/dataStructure';
 import Authentic from '../auth/authentication';
 
 class UserController {
@@ -38,6 +38,30 @@ class UserController {
       status: 201,
       message: 'Successful',
       data,
+    });
+  }
+
+  static getRepaymentLoan(req, res) {
+    const { id, loanid } = req.params;
+    const userEmail = users.find(user => user.id === parseInt(id, 10));
+    const loansId = loans.find(loan => loan.id === parseInt(loanid, 10));
+    if (!loansId) {
+      return res.status(400).send({
+        status: 400,
+        error: 'No loan repayment history',
+      });
+    }
+    if (loansId.email === userEmail.email) {
+      const repayment = loanRepayment.filter(loani => loani.id === id);
+      return res.status(200).send({
+        status: 200,
+        data: repayment,
+      });
+    }
+
+    return res.status(403).send({
+      status: 403,
+      error: 'Unauthorized User',
     });
   }
 }

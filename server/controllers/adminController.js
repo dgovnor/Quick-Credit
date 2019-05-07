@@ -39,6 +39,7 @@ class AdminController {
         id: loanRepayment.length + 100,
         createdOn: new Date(),
         loadId: loanresult.id,
+        monthlyInstallment: loanresult.paymentInstallment,
         amount,
       };
       loanRepayment.push(repayment);
