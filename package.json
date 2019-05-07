@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha ./server/test/**.js --require @babel/register --exit",
-    "start": "nodemon --exec babel-node server/app.js"
+    "test": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit",
+    "start": "nodemon --exec babel-node server/app.js",
+    "coveralls": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rn -rf ./coverage"
   },
   "repository": {
     "type": "git",
