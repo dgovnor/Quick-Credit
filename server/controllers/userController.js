@@ -52,10 +52,16 @@ class UserController {
       });
     }
     if (loansId.email === userEmail.email) {
-      const repayment = loanRepayment.filter(loani => loani.id === id);
-      return res.status(200).send({
-        status: 200,
-        data: repayment,
+      const repayment = loanRepayment.filter(loani => loani.loadId === parseInt(loanid, 10));
+      if (repayment.length > 0) {
+        return res.status(200).send({
+          status: 200,
+          data: repayment,
+        });
+      }
+      return res.status(400).send({
+        status: 400,
+        error: 'No loan repayment history',
       });
     }
 
