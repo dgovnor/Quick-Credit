@@ -27,7 +27,7 @@ class UserController {
       balance: parseInt(amount, 10) + interest,
       interest,
     };
-    if (loans.find(loan => loan.email === email)) {
+    if (loans.find(loan => loan.email === email && loan.balance > 0)) {
       return res.status(409).send({
         status: 409,
         error: 'You have already applied for a loan',
