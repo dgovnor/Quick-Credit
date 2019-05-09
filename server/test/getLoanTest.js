@@ -347,7 +347,6 @@ describe('Admin can get specific users', () => {
           .get(`/api/v1/admin/${id}/users/${email}`)
           .set('Authorization', token)
           .end((_error, response) => {
-            console.log(response.body);
             response.should.have.status(400);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
