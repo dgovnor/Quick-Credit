@@ -297,3 +297,94 @@ describe('User can get Loan repayment history', () => {
       });
   });
 });
+describe('Admin can get specific users', () => {
+  it('Should return 200 if admin get\'s user successfully', (done) => {
+    const USER = {
+      email: 'adminjude@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const email = 'jude4@gmail.com';
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/users/${email}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a('object');
+            response.body.should.have.property('data');
+          });
+        done();
+      });
+  });
+  it('Should return 400 if user is not found', (done) => {
+    const USER = {
+      email: 'adminjude@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const email = 'andela56@quickcredit.com';
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/users/${email}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            console.log(response.body);
+            response.should.have.status(400);
+            response.body.should.be.a('object');
+            response.body.should.have.property('error');
+            response.body.error.should.eql('User not found');
+          });
+        done();
+      });
+  });
+
+
+  it('Should return 400 if wrong email is entered', (done) => {
+    const USER = {
+      email: 'adminjude@quickcredit.com',
+      password: 'combination',
+    };
+    chai
+      .request(app)
+      .post(LOGIN)
+      .send(USER)
+      .end((_err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('data');
+        res.body.data.should.have.property('token');
+        const { id, token } = res.body.data;
+        const email = 'andela56@quickcredit';
+        chai
+          .request(app)
+          .get(`/api/v1/admin/${id}/users/${email}`)
+          .set('Authorization', token)
+          .end((_error, response) => {
+            response.should.have.status(400);
+            response.body.should.be.a('object');
+            response.body.should.have.property('error');
+            response.body.error.should.eql('invalid email');
+          });
+        done();
+      });
+  });
+});

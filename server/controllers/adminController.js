@@ -195,6 +195,30 @@ class AdminController {
       error: 'Loan not found',
     });
   }
+
+  static getSpecificUser(req, res) {
+    const { email } = req.params;
+    const result = users.find(user => user.email === email);
+    if (result) {
+      const newUser = {
+        id: result.id,
+        email: result.email,
+        firstName: result.firstName,
+        lastName: result.lastName,
+        address: result.address,
+        status: result.status,
+        isAdmin: result.isAdmin,
+      };
+      return res.status(200).send({
+        status: 200,
+        data: newUser,
+      });
+    }
+    return res.status(400).send({
+      status: 400,
+      error: 'User not found',
+    });
+  }
 }
 
 

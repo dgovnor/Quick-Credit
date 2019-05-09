@@ -62,6 +62,22 @@ class AdminValidation {
     return next();
   }
 
+  static getSpecificUserValidation(req, res, next) {
+    req
+      .checkParams('email')
+      .isEmail()
+      .withMessage('invalid email')
+      .customSanitizer(email => email.toLowerCase());
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
+
   static getLoanValidation(req, res, next) {
     req
       .checkQuery('status')

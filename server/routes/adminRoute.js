@@ -10,11 +10,13 @@ const adminRouter = express.Router();
 adminRouter.use(expressValidate());
 
 const {
-  adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getLoan, getSpecificLoan,
+  adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getSpecificUser,
+  getLoan, getSpecificLoan,
 } = UserControl;
 const { adminVerifyUserValidation } = UserValidate;
 const {
-  repaymentLoanValidation, approveOrRejectValidation, getSpecificLoanValidation, getLoanValidation,
+  repaymentLoanValidation, getSpecificUserValidation, approveOrRejectValidation,
+  getSpecificLoanValidation, getLoanValidation,
 } = adminValidate;
 const { verifyAdmin, validateToken } = Authorisation;
 
@@ -53,6 +55,12 @@ adminRouter.get(
   getLoanValidation,
   getLoan,
 );
-
+adminRouter.get(
+  '/:id/users/:email',
+  validateToken,
+  verifyAdmin,
+  getSpecificUserValidation,
+  getSpecificUser,
+);
 
 export default adminRouter;
