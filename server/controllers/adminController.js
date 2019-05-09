@@ -13,7 +13,6 @@ class AdminController {
         email: userData.email,
         firstName: userData.firstName,
         lastName: userData.lastName,
-        password: userData.password,
         address: userData.address,
         status: userData.status,
         isAdmin: userData.isAdmin,
