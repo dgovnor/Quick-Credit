@@ -1,0 +1,1199 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Quick Credit, a lending company we are dedicated to helping our customers borrow and invest funds. We offer a fully digital experience by providing credit to salary earners in Nigerian through their employer or individually.",
+    "version": "1.0.0",
+    "title": "Quick Credit",
+    "contact": {
+      "email": "billyjude007@gmail.com"
+    }
+  },
+  "host": "vast-wave-33204.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Home",
+      "description": "Everything about signin and signup route"
+    },
+    {
+      "name": "User",
+      "description": "Access to loans application and repayment history"
+    },
+    {
+      "name": "Admin",
+      "description": "Operations about Admin"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "This is for user to signup",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Signup parameters for loggin route",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signup Successful",
+            "schema": {
+              "$ref": "#/definitions/SignupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "This is for user to login",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "parameters for loggin route",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successful",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/loans": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User can apply for loan",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The user ID"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "parameters for apply route",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/applyLoan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/applyLoanResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/user/{id}/loans/{loanid}/repayments": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User view repayment history",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The user ID"
+          },
+          {
+            "name": "loanid",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "the loan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/repaymentResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/admin/{id}/users/{email}/verify": {
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can verify user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The Admin ID"
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "the user Email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/verifyUserResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/admin/{id}/loans/{loanid}/repayment": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can post repayment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The admin ID"
+          },
+          {
+            "name": "loanid",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "the loan ID"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "parameters for payment route",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/repayment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/repaymentsResponse"
+            }
+          },
+          "201": {
+            "description": "client has repaid loan fully"
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/admin/{id}/loans/{loanid}": {
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can approve loan",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The admin ID"
+          },
+          {
+            "name": "loanid",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "the loan ID"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "parameters for approving loan",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/approveOrReject"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/approveResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can get a specific loan application",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The admin ID"
+          },
+          {
+            "name": "loanid",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "the loan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/specificLoanResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/admin/{id}/loans": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can get all loan application",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The admin ID"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "approved or rejected",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "repaid",
+            "in": "query",
+            "description": "true or false",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/getLoanResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/admin/{id}/users/{email}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin can get a specific user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "The admin ID"
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "the user email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "schema": {
+              "$ref": "#/definitions/getuserResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "401": {
+            "description": "Invalid or No token",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "403": {
+            "description": "Only an admin can access this page",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "address"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "SignupResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "address",
+            "status",
+            "isAdmin",
+            "token"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "isAdmin": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "BadRequest": {
+      "type": "object",
+      "required": [
+        "status",
+        "error"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "address",
+            "status",
+            "isAdmin",
+            "token"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "isAdmin": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "applyLoan": {
+      "type": "object",
+      "required": [
+        "amount",
+        "tenor"
+      ],
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "tenor": {
+          "type": "integer"
+        }
+      }
+    },
+    "applyLoanResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "tenor",
+            "createdOn",
+            "amount",
+            "paymentInstallment",
+            "status",
+            "repaid",
+            "balance",
+            "interest"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "tenor": {
+              "type": "integer"
+            },
+            "createdOn": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "paymentInstallment": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            },
+            "repaid": {
+              "type": "boolean"
+            },
+            "balance": {
+              "type": "number"
+            },
+            "interest": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "repaymentResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "loanid",
+            "createdOn",
+            "monthlyInstallment",
+            "amount"
+          ],
+          "properties": {
+            "loanid": {
+              "type": "integer"
+            },
+            "createdOn": {
+              "type": "string"
+            },
+            "monthlyInstallment": {
+              "type": "number"
+            },
+            "amount": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "verifyUserResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "email",
+            "firstName",
+            "lastName",
+            "address",
+            "status",
+            "isAdmin"
+          ],
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "isAdmin": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "repayment": {
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number"
+        }
+      }
+    },
+    "repaymentsResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "loanId",
+            "createdOn",
+            "amount",
+            "monthlyInstallment",
+            "paidAmount",
+            "balance"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "loanId": {
+              "type": "integer"
+            },
+            "createdOn": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "monthlyInstallment": {
+              "type": "number"
+            },
+            "paidAmount": {
+              "type": "number"
+            },
+            "balance": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "approveOrReject": {
+      "type": "object",
+      "required": [
+        "decision"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string"
+        }
+      }
+    },
+    "approveResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "loanId",
+            "loanAmount",
+            "tenor",
+            "status",
+            "monthlyInstallment",
+            "interest"
+          ],
+          "properties": {
+            "loanId": {
+              "type": "integer"
+            },
+            "loanAmount": {
+              "type": "number"
+            },
+            "tenor": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "string"
+            },
+            "monthlyInstallment": {
+              "type": "number"
+            },
+            "interest": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "specificLoanResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "user",
+            "createdOn",
+            "status",
+            "repaid",
+            "tenor",
+            "amount",
+            "paymentInstallment",
+            "balance",
+            "interest"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "user": {
+              "type": "string"
+            },
+            "createdOn": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "repaid": {
+              "type": "boolean",
+              "default": false
+            },
+            "tenor": {
+              "type": "integer"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "paymentInstallment": {
+              "type": "number"
+            },
+            "balance": {
+              "type": "number"
+            },
+            "interest": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "getLoanResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "loans"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "loans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "user": {
+                "type": "string"
+              },
+              "createdOn": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "repaid": {
+                "type": "boolean",
+                "default": false
+              },
+              "tenor": {
+                "type": "integer"
+              },
+              "amount": {
+                "type": "number"
+              },
+              "paymentInstallment": {
+                "type": "number"
+              },
+              "balance": {
+                "type": "number"
+              },
+              "interest": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getuserResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "required": [
+            "id",
+            "email",
+            "firstName",
+            "lastName",
+            "address",
+            "status",
+            "isAdmin"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "isAdmin": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
