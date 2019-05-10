@@ -43,10 +43,14 @@ class AdminController {
           monthlyInstallment: loanresult.paymentInstallment,
           amount,
         };
-        loanRepayment.push(repayment);
-
         const loanresult2 = loans.findIndex(loan => loan.id === parseInt(loanid, 10));
         if (parseInt(amount, 10) <= loans[loanresult2].balance) {
+          if (parseInt(amount, 10) % loanresult.paymentInstallment !== 0) {
+            return res.status(400).send({
+              status: 400,
+              error: `Amount can't be less than Monthly installment ${loanresult.paymentInstallment}`,
+            });
+          }
           loans[loanresult2].balance -= parseInt(amount, 10);
 
           const loansRepayment = {
@@ -58,10 +62,11 @@ class AdminController {
             paidAmount: parseInt(repayment.amount, 10),
             balance: loans[loanresult2].balance,
           };
+
           if (loansRepayment.balance === 0) {
             loans[loanresult2].repaid = true;
           }
-
+          loanRepayment.push(repayment);
           return res.status(200).send({
             status: 200,
             message: 'Payment accepted',
@@ -123,8 +128,8 @@ class AdminController {
         error: 'User is not yet verified',
       });
     }
-    return res.status(404).send({
-      status: 404,
+    return res.status(400).send({
+      status: 400,
       error: 'This loan doesn\'t exist',
     });
   }
@@ -156,8 +161,8 @@ class AdminController {
       }
     }
     if (loans.length < 1) {
-      return res.status(404).send({
-        status: 404,
+      return res.status(400).send({
+        status: 400,
         error: 'No loan found',
       });
     }
@@ -190,8 +195,8 @@ class AdminController {
         data: getloan,
       });
     }
-    return res.status(404).send({
-      status: 404,
+    return res.status(400).send({
+      status: 400,
       error: 'Loan not found',
     });
   }
