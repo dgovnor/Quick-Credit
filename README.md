@@ -3,7 +3,7 @@
 Quick Credit, a lending company we are dedicated to helping our customers borrow and invest funds. We offer a fully digital experience by providing credit to salary earners in Nigerian through their employer or individually.
 
 [![Build Status](https://travis-ci.org/dgovnor/Quick-Credit.svg?branch=develop)](https://travis-ci.org/dgovnor/Quick-Credit) [![Test Coverage](https://api.codeclimate.com/v1/badges/123ae50e0da75177f055/test_coverage)](https://codeclimate.com/github/dgovnor/Quick-Credit/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/123ae50e0da75177f055/maintainability)](https://codeclimate.com/github/dgovnor/Quick-Credit/maintainability) [![Coverage Status](https://coveralls.io/repos/github/dgovnor/Quick-Credit/badge.svg)](https://coveralls.io/github/dgovnor/Quick-Credit)
-
+ [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 # Introuction
 ## _Project Overview_
 We are Quick Credit, a lending company with customers in 36 states in Nigeria. We don’t have branches, but we are dedicated to helping our customers borrow and invest funds. We offer a fully digital experience by providing credit to salary earners in Nigerian through their employer or individually. This means our customers can access finance anytime and anywhere. For more inqueries please fill up the contact form bellow so we can get back to you.
@@ -75,3 +75,7 @@ To run test cases
 | /api/v1/admin/_:id_/loans?_status=approved&repaid=false_ | View all current loans(not fully repaid) |         GET |
 | /api/v1/admin/_:id_/loans?_status=approved&repaid=true_  |      View all current repaid loans       |         GET |
 | /api/v1/admin/:id/users/:email               |            Get A Single User             |         GET |
+
+
+## Licensing
+The code in this project is licensed under MIT license.
