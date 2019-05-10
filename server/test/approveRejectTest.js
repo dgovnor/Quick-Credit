@@ -214,7 +214,7 @@ describe('Admin approves or reject loan', () => {
                       .set('Authorization', token)
                       .send(decision)
                       .end((_error2, response2) => {
-                        response2.should.have.status(404);
+                        response2.should.have.status(400);
                         response2.body.should.be.a('object');
                         response2.body.should.have.property('error');
                         response2.body.error.should.eql('This loan doesn\'t exist');
@@ -287,7 +287,7 @@ describe('Admin approves or reject loan', () => {
                       .set('Authorization', token)
                       .send(decision)
                       .end((_error2, response2) => {
-                        response2.should.have.status(404);
+                        response2.should.have.status(400);
                         response2.body.should.be.a('object');
                         response2.body.should.have.property('error');
                         response2.body.error.should.eql('Approved or rejected');
@@ -360,7 +360,7 @@ describe('Admin approves or reject loan', () => {
                       .set('Authorization', token)
                       .send(decision)
                       .end((_error2, response2) => {
-                        response2.should.have.status(404);
+                        response2.should.have.status(400);
                         response2.body.should.be.a('object');
                         response2.body.should.have.property('error');
                         response2.body.error.should.eql('Either approved or rejected');

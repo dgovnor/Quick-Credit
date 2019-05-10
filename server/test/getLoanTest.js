@@ -65,7 +65,7 @@ describe('Admin can get all kinds of loan', () => {
         done();
       });
   });
-  it('should return 404 if no loan available', (done) => {
+  it('should return 400 if no loan available', (done) => {
     const USER = {
       email: 'admin@quickcredit.com',
       password: 'combination',
@@ -86,7 +86,7 @@ describe('Admin can get all kinds of loan', () => {
           .get(`/api/v1/admin/${id}/loans/${loanid}`)
           .set('Authorization', token)
           .end((_error, response) => {
-            response.should.have.status(404);
+            response.should.have.status(400);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
             response.body.error.should.be.eql('Loan not found');
@@ -94,7 +94,7 @@ describe('Admin can get all kinds of loan', () => {
         done();
       });
   });
-  it('should return 404 if incorrect loanid', (done) => {
+  it('should return 400 if incorrect loanid', (done) => {
     const USER = {
       email: 'admin@quickcredit.com',
       password: 'combination',
@@ -115,7 +115,7 @@ describe('Admin can get all kinds of loan', () => {
           .get(`/api/v1/admin/${id}/loans/${loanid}`)
           .set('Authorization', token)
           .end((_error, response) => {
-            response.should.have.status(404);
+            response.should.have.status(400);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
             response.body.error.should.be.eql('Loan not found');

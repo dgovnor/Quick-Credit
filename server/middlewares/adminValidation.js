@@ -37,8 +37,8 @@ class AdminValidation {
 
     const error = req.validationErrors();
     if (error) {
-      return res.status(404).json({
-        status: 404,
+      return res.status(400).json({
+        status: 400,
         error: error[0].msg,
       });
     }
@@ -54,8 +54,8 @@ class AdminValidation {
       .withMessage('Loan not found');
     const error = req.validationErrors();
     if (error) {
-      return res.status(404).json({
-        status: 404,
+      return res.status(400).json({
+        status: 400,
         error: error[0].msg,
       });
     }
