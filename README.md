@@ -10,38 +10,9 @@ We are Quick Credit, a lending company with customers in 36 states in Nigeria. W
 
 ## Screenshot(UI template)
 ![quickcredit](https://github.com/dgovnor/Quick-Credit/blob/develop/Screenshot%20from%202019-05-06%2011-45-10.png)
-### **Style guide**
-
-[Airbnb ](https://github.com/airbnb/javascript)(Javascript style guide)
-
-# UI Templates
-
-Preview UI templates [Github Pages](https://dgovnor.github.io/Quick-Credit/UI/index.html)
-
-# Pivotal Tracker ID
-https://www.pivotaltracker.com/n/projects/2326523
-
-# Technologies
-
-- NodeJs
-- Express
-- Mocha & Chai
-- ESLint
-- Babel
-- Travis
-- Code Climate
-- Coveralls
-
-# Installing
-
-#### _Prerequisites_
-
-Ensure you have **NodeJS** installed by entering `node -v` on your terminal
-If you don't have **NodeJS** installed, go to the [NodeJS Website](http://nodejs.org), and follow the download instructions
-
+## Installing / Getting started
 To install this app
-
-`git clone https://github.com/dgovnor/Quick-Credit.git`
+git clone https://github.com/dgovnor/Quick-Credit.git`
 
 And install the required dependencies
 
@@ -59,22 +30,20 @@ To run test cases
 
 `npm test`
 
-## _API Endpoints_
+`
+# UI Templates
 
-| Endpoint                                     |              Functionality               | HTTP method |
-| -------------------------------------------- | :--------------------------------------: | ----------: |
-| /api/v1/auth/signup                          |          Create a user account           |        POST |
-| /api/v1/auth/login                           |               Login a user               |        POST |
-| /api/v1/user/_:id_/loans                       |        Create a loan application       |        POST |
-| /api/v1/user/_:id_/_:loanid_/repayments      |     User view all loan repayment History |         GET |
-| /api/v1/admin/_:id_/users/_:email_/verify    |          Mark User as Verified           |       PATCH |
-| /api/v1/admin/_:id_/loans/_:loanid_/repayment|        Create a repayment record         |        POST |
-| /api/v1/admin/_:id_/loans/_:loanid_          |          Reject or approve loan          |       PATCH |
-| /api/v1/admin/_:id_/loans/_:loanid_          |     Get a specific loan application      |         GET |
-| /api/v1/admin/_:id_/loans                    |        Get all loan applications         |         GET |
-| /api/v1/admin/_:id_/loans?_status=approved&repaid=false_ | View all current loans(not fully repaid) |         GET |
-| /api/v1/admin/_:id_/loans?_status=approved&repaid=true_  |      View all current repaid loans       |         GET |
-| /api/v1/admin/:id/users/:email               |            Get A Single User             |         GET |
+Preview UI templates [Github Pages](https://dgovnor.github.io/Quick-Credit/UI/index.html)
+
+# Pivotal Tracker ID
+https://www.pivotaltracker.com/n/projects/2326523
+
+
+
+
+## _API Endpoints_documentation
+https://vast-wave-33204.herokuapp.com/api/v1/docs/
+
 
 
 ## Licensing
