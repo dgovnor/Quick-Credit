@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { loans, users, loanRepayment } from '../models/dataStructure';
 import Authentic from '../auth/authentication';
 
@@ -19,7 +20,7 @@ class UserController {
       lastName: user.lastName,
       email: user.email,
       tenor,
-      createdOn: new Date(),
+      createdOn: moment().format('LLL'),
       amount,
       paymentInstallment: (parseInt(amount, 10) + interest) / parseInt(tenor, 10),
       status: 'Pending',

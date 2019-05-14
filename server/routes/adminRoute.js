@@ -10,7 +10,7 @@ const adminRouter = express.Router();
 adminRouter.use(expressValidate());
 
 const {
-  adminVerifyUser, AdminPostRepayment, approveOrRejectLoan, getSpecificUser,
+  adminVerifyUser, adminPostRepayment, approveOrRejectLoan, getSpecificUser,
   getLoan, getSpecificLoan,
 } = UserControl;
 const { adminVerifyUserValidation } = UserValidate;
@@ -32,7 +32,7 @@ adminRouter.post(
   validateToken,
   verifyAdmin,
   repaymentLoanValidation,
-  AdminPostRepayment,
+  adminPostRepayment,
 );
 adminRouter.patch(
   '/:id/loans/:loanid',
