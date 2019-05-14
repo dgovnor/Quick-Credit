@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { users, loanRepayment, loans } from '../models/dataStructure';
 
 
@@ -29,7 +30,7 @@ class AdminController {
     });
   }
 
-  static AdminPostRepayment(req, res) {
+  static adminPostRepayment(req, res) {
     const { loanid } = req.params;
     const { amount } = req.body;
     const loanresult = loans.find(loan => loan.id === parseInt(loanid, 10));
@@ -38,7 +39,7 @@ class AdminController {
       if (loanresult.status === 'approved') {
         const repayment = {
           id: loanRepayment.length + 100,
-          createdOn: new Date(),
+          createdOn: moment().format('LLL'),
           loadId: loanresult.id,
           monthlyInstallment: loanresult.paymentInstallment,
           amount,
@@ -56,7 +57,7 @@ class AdminController {
           const loansRepayment = {
             id: loanRepayment.length + 100,
             loanId: loanresult.id,
-            createdOn: new Date(),
+            createdOn: moment().format('LLL'),
             amount: loanresult.amount,
             monthlyInstallment: loanresult.paymentInstallment,
             paidAmount: parseInt(repayment.amount, 10),
@@ -180,7 +181,7 @@ class AdminController {
       const getloan = {
         id: loanresult.id,
         user: loanresult.email,
-        createdOn: new Date(),
+        createdOn: loanresult.createdOn,
         status: loanresult.status,
         repaid: loanresult.repaid,
         tenor: loanresult.tenor,
