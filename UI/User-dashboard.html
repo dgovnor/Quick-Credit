@@ -1,277 +1,228 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>User dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="User-dashboard.css"
-    />
 
-    <link
-      href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto|Bebas Neue| Cheddar jack| cursive"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <header id="home">
-      <h1 ><a href="#"class="topic">Quick Credit</a></h1>
-      <div class="menu">
-        <span class="bar"></span>
-      </div>
-      <nav class="nav">
-        <a href="#" id="logo">Quick Credit</a>
-        <div class="overlay">
-         
-          <ul>
-            <li>
-                <div href="#" class="notification" id="notificationBox">
-                    <i class="far fa-envelope"></i>
-                    <span class="badge">0</span>
-                </div>
-        
-                  <div class="mobileNotify" id =>
-                    <div class="imgcontainer">
-                      <p class="title">No messages</p>
-                    </div>
-                  </div>
-            </li>
-            <li class="show-avatar">
-              <a href="#"><img src="boy.png" alt="Avatar" class="avatar" /> </a>
-              <div class="dropdown-content">
-                <div class="imgcontainer">
-                  <img src="boy.png" alt="Avatar" class="avatar" />
-                  <h1>Jude Ezekiel</h1>
-                  <p class="title">Company Name</p>
-                  <p>123 bode thomas road</p>
-                  <p>
-                    <span class="loan">Active loan : <i> 1</i></span>
-                  </p>
-                  <p>
-                    <span class="loan">Transaction balance :<i>200000</i></span>
-                  </p>
-                  <a href="#"><i class="fab fa-dribbble"></i></a>
-                  <a href="#"><i class="fab fa-twitter"></i></a>
-                  <a href="#"><i class="fab fa-linkedin"></i></a>
-                  <a href="#"><i class="fab fa-facebook"></i></a>
-                </div>
-              </div>
-              <div class="mobile-content">
-                <div class="imgcontainer">
-                  <img src="boy.png" alt="Avatar" class="avatar" />
-                  <h1>Jude Ezekiel</h1>
-                  <p class="title">Company Name</p>
-                  <p>123 bode thomas road</p>
-                  <p>
-                    <span class="loan">Active loan : <i> 1</i></span>
-                  </p>
-                  <p>
-                    <span class="loan">Transaction balance :<i>200000</i></span>
-                  </p>
-                  <a href="#"><i class="fab fa-dribbble"></i></a>
-                  <a href="#"><i class="fab fa-twitter"></i></a>
-                  <a href="#"><i class="fab fa-linkedin"></i></a>
-                  <a href="#"><i class="fab fa-facebook"></i></a>
-                </div>
-              </div>
-            </li>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>User dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" media="screen" href="User-dashboard.css" />
 
-            <li><a href="#signOutModal" id="signout">Sign Out</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <h1 class="welcome-h1">Hi, Welcome back Jude</h1>
-    <section class="cards">
-      <div id="applyLoanButton" class="card">
-        <div class="container">
-          <i class="fas fa-landmark card-icons"></i>
-          <h4><b>Apply For Loan</b></h4>
-        </div>
-      </div>
-      <div id="paymentButton" class="card">
-        <div class="container">
-          <i class="far fa-credit-card card-icons"></i>
-          <h4><b>Make Payment</b></h4>
-        </div>
-      </div>
-      <div id="viewTransactionButton" class="card">
-        <div class="container">
-          <i class="fas fa-wallet card-icons"></i>
-          <h4><b>View Transactions</b></h4>
-        </div>
-      </div>
-    </section>
-    <!--Modeal for viewing transactions-->
-    <div id="viewTransactionModal" class="modal">
-      <div class="modal-content animate" action="/dashboard.html">
-        <div class="imgcontainer">
-          <h1>Transaction History</h1>
-         </div>
-        <div class="tablename">
-          <table>
-            <tr>
-              <th>Transaction #id</th>
-              <th>Amount</th>
-              <th>Date created</th>
-              <th>Status</th>
-            </tr>
-            <tr>
-              <td>1000</td>
-              <td>500000</td>
-              <td>12/10/2009</td>
-              <td>Pending</td>
-            </tr>
-            <tr>
-              <td>1001</td>
-              <td>10000</td>
-              <td>12/15/2010</td>
-              <td>paid</td>
-            </tr>
-            <tr>
-              <td>1006</td>
-              <td>1000</td>
-              <td>10/12/2018</td>
-              <td>Paid</td>
-            </tr>
-            <tr>
-              <td>1006</td>
-              <td>1000</td>
-              <td>10/12/2018</td>
-              <td>paid</td>
-            </tr>
-          </table>
-        </div>
-      </div>
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans|Roboto|Bebas Neue| Cheddar jack| cursive"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+</head>
+
+<body>
+  <header id="home">
+    <h1><a href="#" class="topic">Quick Credit</a></h1>
+    <div class="menu">
+      <span class="bar"></span>
     </div>
-    <!--Modeal for applying for loan-->
-    <div id="applyLoanModal" class="modal">
-      <form class="loanmodal-content animate" action="#">
-        <div class="imgcontainer">
-          <h1>APPLY FOR LOAN</h1>
-           </div>
+    <nav class="nav">
+      <a href="#" id="logo">Quick Credit</a>
+      <div class="overlay">
 
-        <div class="container-login">
-          <label><b>Username</b></label>
-          <input
-            type="text"
-            placeholder="Enter Email address"
-            name="uname"
-            required
-          />
-          <label><b>Amount</b></label>
-
-          <input
-            type="text"
-            placeholder="Enter Amount"
-            name="psw"
-            class="input-field"
-            required
-          />
-
-          <label><b>Account Number</b></label>
-
-          <input
-            type="text"
-            placeholder="Account number"
-            name="psw"
-            class="input-field"
-            required
-          />
-          <label><b>Account Name</b></label>
-          <input
-            type="text"
-            placeholder="Enter Account Name"
-            name="uname"
-            required
-          />
-          <label><b>Bank Name</b></label>
-          <input
-            type="text"
-            placeholder="Enter Bank Name"
-            name="uname"
-            required
-          />
-          <button class="login-btn" type="submit">Apply</button>
-        </div>
-      </form>
-    </div>
-    <!--Modeal for Notification-->
-    <!--Modeal for payment-->
-    <div id="paymentModal" class="modal ">
-      <div class="loanmodal-content animate paymentcontent" action="/dashboard.html">
-        <div class="imgcontainer">
-          <h1>Payment</h1>
+        <ul>
+          <li>
+            <div href="#" class="notification" id="notificationBox">
+              <i class="far fa-envelope"></i>
+              <span class="badge">0</span>
             </div>
-        <label for="fname">Accepted Cards</label>
-        <div class="icon-container">
-          <i class="fab fa-cc-visa visa"></i>
-          <i class="fab fa-cc-stripe amex"></i>
-          <i class="fab fa-cc-mastercard mastercard"></i>
-          <i class="fab fa-cc-apple-pay discover"></i>
-        </div>
-        <label for="cname">Name on Card</label>
-        <input
-          type="text"
-          id="cname"
-          name="cardname"
-          placeholder="Enter name on card"
-        />
-        <label for="ccnum">Credit card number</label>
-        <input
-          type="text"
-          id="ccnum"
-          name="cardnumber"
-          placeholder="****-****-****-****"
-        />
-        <label for="expmonth">Exp Month</label>
-        <input
-          type="text"
-          id="expmonth"
-          name="expmonth"
-          placeholder="Enter month"
-        />
 
-        <div class="row">
-          <div class="paymentcontent">
-            <label for="expyear">Exp Year</label>
-            <input type="text" id="expyear" name="expyear" placeholder="2018" />
-          </div>
-          <div class="paymentcontent">
-            <label for="cvv">CVV</label>
-            <input type="text" id="cvv" name="cvv" placeholder="***" />
-          </div>
-        </div>
-        <button class="login-btn" type="submit">Submit</button>
+            <div class="mobileNotify" id=>
+              <div class="imgcontainer">
+                <p class="title">No messages</p>
+              </div>
+            </div>
+          </li>
+          <li class="show-avatar">
+            <a href="#"><img src="boy.png" alt="Avatar" class="avatar" /> </a>
+            <div class="dropdown-content">
+              <div class="imgcontainer">
+                <img src="boy.png" alt="Avatar" class="avatar" />
+                <h1>Jude Ezekiel</h1>
+                <p class="title">Company Name</p>
+                <p>123 bode thomas road</p>
+                <p>
+                  <span class="loan">Active loan : <i> 1</i></span>
+                </p>
+                <p>
+                  <span class="loan">Transaction balance :<i>200000</i></span>
+                </p>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+              </div>
+            </div>
+            <div class="mobile-content">
+              <div class="imgcontainer">
+                <img src="boy.png" alt="Avatar" class="avatar" />
+                <h1>Jude Ezekiel</h1>
+                <p class="title">Company Name</p>
+                <p>123 bode thomas road</p>
+                <p>
+                  <span class="loan">Active loan : <i> 1</i></span>
+                </p>
+                <p>
+                  <span class="loan">Transaction balance :<i>200000</i></span>
+                </p>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="#signOutModal" id="signout">Sign Out</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <h1 class="welcome-h1">Hi, Welcome back Jude</h1>
+  <section class="cards">
+    <div id="applyLoanButton" class="card">
+      <div class="container">
+        <i class="fas fa-landmark card-icons"></i>
+        <h4><b>Apply For Loan</b></h4>
       </div>
     </div>
-    <div class="modal" id="signOutModal">
-      <div class="signout-content animate">
-        <h1>Are you sure you want to sign out</h1>
-        <span
-          ><a href="./index.html">Yes</a
-          ><a href="./User-dashboard.html">Cancel</a></span
-        >
+    <div id="paymentButton" class="card">
+      <div class="container">
+        <i class="far fa-credit-card card-icons"></i>
+        <h4><b>Make Payment</b></h4>
       </div>
     </div>
-    <!--footer-->
-    <footer>
-      <div class="locations">
-        <h4>&copy 2019</h4>
+    <div id="viewTransactionButton" class="card">
+      <div class="container">
+        <i class="fas fa-wallet card-icons"></i>
+        <h4><b>View Transactions</b></h4>
       </div>
-    </footer>
+    </div>
+  </section>
+  <!--Modeal for viewing transactions-->
+  <div id="viewTransactionModal" class="modal">
+    <div class="modal-content animate" action="/dashboard.html">
+      <div class="imgcontainer">
+        <h1>Transaction History</h1>
+      </div>
+      <div class="tablename">
+        <table>
+          <tr>
+            <th>Transaction #id</th>
+            <th>Amount</th>
+            <th>Date created</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>1000</td>
+            <td>500000</td>
+            <td>12/10/2009</td>
+            <td>Pending</td>
+          </tr>
+          <tr>
+            <td>1001</td>
+            <td>10000</td>
+            <td>12/15/2010</td>
+            <td>paid</td>
+          </tr>
+          <tr>
+            <td>1006</td>
+            <td>1000</td>
+            <td>10/12/2018</td>
+            <td>Paid</td>
+          </tr>
+          <tr>
+            <td>1006</td>
+            <td>1000</td>
+            <td>10/12/2018</td>
+            <td>paid</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--Modeal for applying for loan-->
+  <div id="applyLoanModal" class="modal">
+    <form class="loanmodal-content animate" action="#">
+      <div class="imgcontainer">
+        <h1>APPLY FOR LOAN</h1>
+      </div>
 
-    <script src="User-dashboard.js"></script>
-  </body>
+      <div class="container-login">
+        <label><b>First name</b></label>
+        <input type="text" placeholder="Enter first name" name="uname" required />
+        <label><b>Last name</b></label>
+        <input type="text" placeholder="Enter Last name" name="uname" required />
+        <label><b>Email</b></label>
+        <input type="email" placeholder="Enter Email address" name="uname" required />
+        <label><b>Tenor</b></label>
+        <input type="number" value="12" name="uname" required />
+        <label><b>Amount</b></label>
+
+        <input type="number" placeholder="Enter Amount" name="psw" class="input-field" required />
+
+        <label><b>Payment installment</b></label>
+
+        <input type="number" placeholder="payment installment" name="psw" class="input-field" required />
+        <label><b>Interest</b></label>
+        <input type="number" placeholder="5%" name="uname" disabled />
+        <button class="login-btn" type="submit">Apply</button>
+      </div>
+    </form>
+  </div>
+  <!--Modeal for Notification-->
+  <!--Modeal for payment-->
+  <div id="paymentModal" class="modal ">
+    <div class="loanmodal-content animate paymentcontent" action="/dashboard.html">
+      <div class="imgcontainer">
+        <h1>Payment</h1>
+      </div>
+      <label for="fname">Accepted Cards</label>
+      <div class="icon-container">
+        <i class="fab fa-cc-visa visa"></i>
+        <i class="fab fa-cc-stripe amex"></i>
+        <i class="fab fa-cc-mastercard mastercard"></i>
+        <i class="fab fa-cc-apple-pay discover"></i>
+      </div>
+      <label for="cname">Name on Card</label>
+      <input type="text" id="cname" name="cardname" placeholder="Enter name on card" />
+      <label for="ccnum">Credit card number</label>
+      <input type="number" id="ccnum" name="cardnumber" placeholder="****-****-****-****" />
+      <label for="expmonth">Exp Month</label>
+      <input type="number" id="expmonth" name="expmonth" placeholder="Enter month" />
+
+      <div class="row">
+        <div class="paymentcontent">
+          <label for="expyear">Exp Year</label>
+          <input type="number" id="expyear" name="expyear" placeholder="2018" />
+        </div>
+        <div class="paymentcontent">
+          <label for="cvv">CVV</label>
+          <input type="number" id="cvv" name="cvv" placeholder="***" />
+        </div>
+      </div>
+      <button class="login-btn" type="submit">Submit</button>
+    </div>
+  </div>
+  <div class="modal" id="signOutModal">
+    <div class="signout-content animate">
+      <h1>Are you sure you want to sign out</h1>
+      <span><a href="./index.html">Yes</a><a href="./User-dashboard.html">Cancel</a></span>
+    </div>
+  </div>
+  <!--footer-->
+  <footer>
+    <div class="locations">
+      <h4>&copy 2019</h4>
+    </div>
+  </footer>
+
+  <script src="User-dashboard.js"></script>
+</body>
+
 </html>
 <!---->
