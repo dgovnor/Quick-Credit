@@ -36,12 +36,21 @@ class HomeController {
         error: 'Email address already exist',
       });
     }
-
+    const responseResult = {
+      token,
+      id,
+      email,
+      firstName,
+      lastName,
+      address,
+      status,
+      isAdmin,
+    };
     users.push(data);
     return res.status(201).send({
       status: 201,
       message: 'Successful',
-      data,
+      data: responseResult,
     });
   }
 
@@ -64,10 +73,20 @@ class HomeController {
       if (checkPassword) {
         const data = users[indexOfEmail];
         data.token = token;
+        const responseResult = {
+          token: data.token,
+          id: data.id,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          status: data.status,
+          isAdmin: data.isAdmin,
+        };
         return res.status(200).send({
           message: 'Login Successful',
           status: 200,
-          data,
+          data: responseResult,
         });
       }
     }

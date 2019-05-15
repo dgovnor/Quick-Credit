@@ -37,8 +37,64 @@ class AdminValidation {
 
     const error = req.validationErrors();
     if (error) {
-      return res.status(404).json({
-        status: 404,
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
+
+  static getSpecificLoanValidation(req, res, next) {
+    req
+      .checkParams('loanid')
+      .notEmpty()
+      .withMessage('Loan not found')
+      .isNumeric()
+      .withMessage('Loan not found');
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
+
+  static getSpecificUserValidation(req, res, next) {
+    req
+      .checkParams('email')
+      .isEmail()
+      .withMessage('invalid email')
+      .customSanitizer(email => email.toLowerCase());
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
+        error: error[0].msg,
+      });
+    }
+    return next();
+  }
+
+  static getLoanValidation(req, res, next) {
+    req
+      .checkQuery('status')
+      .isIn('approved')
+      .withMessage('Bad request')
+      .optional();
+
+    req
+      .checkQuery('repaid')
+      .isBoolean()
+      .withMessage('Bad request')
+      .optional();
+
+    const error = req.validationErrors();
+    if (error) {
+      return res.status(400).json({
+        status: 400,
         error: error[0].msg,
       });
     }

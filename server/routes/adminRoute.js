@@ -9,9 +9,15 @@ const adminRouter = express.Router();
 
 adminRouter.use(expressValidate());
 
-const { adminVerifyUser, AdminPostRepayment, approveOrRejectLoan } = UserControl;
+const {
+  adminVerifyUser, adminPostRepayment, approveOrRejectLoan, getSpecificUser,
+  getLoan, getSpecificLoan,
+} = UserControl;
 const { adminVerifyUserValidation } = UserValidate;
-const { repaymentLoanValidation, approveOrRejectValidation } = adminValidate;
+const {
+  repaymentLoanValidation, getSpecificUserValidation, approveOrRejectValidation,
+  getSpecificLoanValidation, getLoanValidation,
+} = adminValidate;
 const { verifyAdmin, validateToken } = Authorisation;
 
 adminRouter.patch(
@@ -26,7 +32,7 @@ adminRouter.post(
   validateToken,
   verifyAdmin,
   repaymentLoanValidation,
-  AdminPostRepayment,
+  adminPostRepayment,
 );
 adminRouter.patch(
   '/:id/loans/:loanid',
@@ -34,6 +40,27 @@ adminRouter.patch(
   verifyAdmin,
   approveOrRejectValidation,
   approveOrRejectLoan,
+);
+adminRouter.get(
+  '/:id/loans/:loanid',
+  validateToken,
+  verifyAdmin,
+  getSpecificLoanValidation,
+  getSpecificLoan,
+);
+adminRouter.get(
+  '/:id/loans',
+  validateToken,
+  verifyAdmin,
+  getLoanValidation,
+  getLoan,
+);
+adminRouter.get(
+  '/:id/users/:email',
+  validateToken,
+  verifyAdmin,
+  getSpecificUserValidation,
+  getSpecificUser,
 );
 
 export default adminRouter;

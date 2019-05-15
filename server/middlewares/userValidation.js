@@ -1,5 +1,4 @@
-/* eslint-disable consistent-return */
-class userValidation {
+class UserValidation {
   static signupValidation(req, res, next) {
     req
       .checkBody('email')
@@ -45,7 +44,6 @@ class userValidation {
       .trim()
       .isLength({ min: 10, max: 100 })
       .withMessage('Address should be between 10 to 100 character long')
-      // eslint-disable-next-line no-useless-escape
       .matches(/^[A-Za-z0-9\.\-\s\,]*$/)
       .withMessage('Invalid Address entered');
     const error = req.validationErrors();
@@ -55,8 +53,7 @@ class userValidation {
         error: error[0].msg,
       });
     }
-    // TODO check why no return to this next
-    next();
+    return next();
   }
 
   static loginValidation(req, res, next) {
@@ -101,4 +98,4 @@ class userValidation {
     return next();
   }
 }
-export default userValidation;
+export default UserValidation;
