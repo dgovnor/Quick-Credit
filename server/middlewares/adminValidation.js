@@ -50,7 +50,7 @@ class AdminValidation {
       .checkParams('loanid')
       .notEmpty()
       .withMessage('Loan not found')
-      .isNumeric()
+      .isInt()
       .withMessage('Loan not found');
     const error = req.validationErrors();
     if (error) {
