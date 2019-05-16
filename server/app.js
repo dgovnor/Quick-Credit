@@ -24,7 +24,10 @@ app.use((_req, res) => res.status(404).send({
   status: 404,
   error: 'URL doesn\'t exist, Please check again ',
 }));
-
+app.use((err, req, res, next) => res.status(400).send({
+  status: err.statusCode,
+  message: 'Bad Request',
+}));
 const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
