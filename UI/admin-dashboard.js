@@ -93,9 +93,9 @@ tbody.onclick = function (e) {
   }
   Modal(modal);
   content.innerHTML = `Loan id : ${data[0]} </br>
-    Email : ${data[1]} </br>  Amount: ${data[2]} </br>
-    Date created : ${data[3]} </br> Verified : ${data[4]}
-    </br> Status : ${data[5]}`;
+    Email : ${data[1]} </br> Address: ${data[2]}</br>  Amount: ${data[3]} </br>
+    Date created : ${data[4]} </br> Verified : ${data[5]}
+    </br> Status : ${data[6]}`;
 
   closeWindow(emptyModal);
 };
