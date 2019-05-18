@@ -8,6 +8,12 @@ class AdminController {
     const userDataIndex = users.findIndex(user => user.email === email);
     const userData = users[userDataIndex];
     if (userData) {
+      if (userData.status === 'verified') {
+        return res.status(400).send({
+          status: 400,
+          error: 'User is already verified',
+        });
+      }
       userData.status = 'verified';
 
       const newUserData = {
@@ -107,6 +113,12 @@ class AdminController {
       const userresult = users.find(user => user.email === loanresult.email);
       if (userresult.status === 'verified') {
         if (loanresult) {
+          if (loanresult.status === decision) {
+            return res.status(400).send({
+              status: 400,
+              error: `Loan already ${decision}`,
+            });
+          }
           loanresult.status = decision;
 
           const newLoanData = {

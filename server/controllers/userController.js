@@ -28,6 +28,13 @@ class UserController {
       balance: parseInt(amount, 10) + interest,
       interest,
     };
+    const loanresult2 = loans.findIndex(loan => loan.email === email && loan.balance > 0);
+    const loanEmail = loans[loanresult2];
+    const changeBalance = loans.find(loan => loan.email === email && loan.status === 'rejected' && loan.balance > 0);
+
+    if (changeBalance) {
+      loanEmail.balance = 0;
+    }
     if (loans.find(loan => loan.email === email && loan.balance > 0)) {
       return res.status(409).send({
         status: 409,
