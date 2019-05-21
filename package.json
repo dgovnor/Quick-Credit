@@ -8,7 +8,8 @@
     "start": "node build/app.js",
     "start-dev": "nodemon --exec babel-node server/app.js",
     "build": "babel server --out-dir build --copy-files",
-    "coveralls": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rn -rf ./coverage"
+    "coveralls": "nyc --reporter=lcov --reporter=text mocha ./server/test/**.js --require @babel/register --exit --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rn -rf ./coverage",
+    "migrate": "babel-node ./server/models/database"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "nyc": "^14.0.0"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
@@ -47,6 +49,8 @@
     "mocha": "^6.1.4",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
+    "pg": "^7.11.0",
+    "pg-format": "^1.0.4",
     "swagger-ui-express": "^4.0.2"
   }
 }
