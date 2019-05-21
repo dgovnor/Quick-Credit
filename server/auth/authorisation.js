@@ -1,5 +1,6 @@
 import Authentic from './authentication';
 import { users } from '../models/dataStructure';
+import db from '../index';
 
 const { verifyToken } = Authentic;
 
@@ -31,10 +32,16 @@ class Authorisation {
    * @returns {object} Json APi response
    */
 
-  static verifyUser(req, res, next) {
-    const user = users.filter(element => element.id === parseInt(req.params.id, 10));
-    if (user.length === 0 || req.payload.email !== user[0].email
-      || user[0].id !== req.payload.id || user[0].isAdmin) {
+  static async verifyUser(req, res, next) {
+    const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [parseInt(req.params.id, 10)]);
+    if (!rows) {
+      return res.status(403).send({
+        status: 403,
+        error: 'Unauthorized User',
+      });
+    }
+    if (rows.length === 0 || req.payload.email !== rows[0].email
+      || rows[0].id !== req.payload.id || rows[0].isAdmin) {
       return res.status(403).send({
         status: 403,
         error: 'Unauthorized User',
