@@ -1,101 +1,100 @@
-import { users } from '../models/dataStructure';
 import authenticate from '../auth/authentication';
+import db from '../index';
 
-
-class HomeController {
-  static signupUser(req, res) {
+const HomeController = {
+  async signupUser(req, res) {
     const {
       email, firstName, lastName, password, address,
     } = req.body;
-    const id = users.length + 1;
     const status = 'unverified';
     const isAdmin = false;
-
-    const token = authenticate.token({
-      id,
-      email,
-      status,
-      isAdmin,
-    });
-
-    const data = {
-      token,
-      id,
+    const text = `INSERT INTO 
+      users(email,firstName,lastName,
+        password,address,status,isAdmin) VALUES($1,$2,$3,
+          $4,$5,$6,$7) RETURNING *`;
+    const values = [
       email,
       firstName,
       lastName,
-      password: authenticate.makeHashPassword(password),
+      req.body.password = authenticate.makeHashPassword(password),
       address,
       status,
       isAdmin,
-    };
-
-    if (users.find(user => user.email === email)) {
-      return res.status(409).send({
-        status: 409,
-        error: 'Email address already exist',
-      });
-    }
-    const responseResult = {
-      token,
-      id,
-      email,
-      firstName,
-      lastName,
-      address,
-      status,
-      isAdmin,
-    };
-    users.push(data);
-    return res.status(201).send({
-      status: 201,
-      message: 'Successful',
-      data: responseResult,
-    });
-  }
-
-  static loginUser(req, res) {
-    const { email, password } = req.body;
-    const indexOfEmail = users.findIndex(user => user.email === email);
-
-
-    if (indexOfEmail !== -1) {
-      const { id } = users[indexOfEmail];
-      const token = authenticate.token({
-        id,
+    ];
+    try {
+      await db.query(text, values);
+      const responseResult = {
         email,
-        password,
+        firstName,
+        lastName,
+        address,
+        status,
+        isAdmin,
+      };
+      return res.status(201).json({
+        status: 200,
+        data: responseResult,
+      });
+    } catch (error) {
+      if (error.routine === '_bt_check_unique') {
+        return res.status(409).json({
+          status: 409,
+          error: 'Email address already exist',
+        });
+      }
+      return res.status(400).json(error);
+    }
+  },
+
+  async loginUser(req, res) {
+    const { email, password } = req.body;
+    const text = 'SELECT * FROM users WHERE email = $1';
+    try {
+      const { rows } = await db.query(text, [email]);
+      if (!rows[0]) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Email or password is incorrect',
+        });
+      }
+      const token = authenticate.token({
+        id: rows[0].id,
+        email: rows[0].email,
+        password: rows[0].password,
       });
       const checkPassword = authenticate.checkPassword(
         password,
-        users[indexOfEmail].password,
+        rows[0].password,
       );
       if (checkPassword) {
-        const data = users[indexOfEmail];
-        data.token = token;
         const responseResult = {
-          token: data.token,
-          id: data.id,
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          address: data.address,
-          status: data.status,
-          isAdmin: data.isAdmin,
+          token,
+          id: rows[0].id,
+          email: rows[0].email,
+          firstName: rows[0].firstname,
+          lastName: rows[0].lastname,
+          address: rows[0].address,
+          status: rows[0].status,
+          isAdmin: rows[0].isadmin,
         };
-        return res.status(200).send({
-          message: 'Login Successful',
-          status: 200,
-          data: responseResult,
-        });
+        return res.header('x-auth-token', token)
+          .status(200).json({
+            message: 'Login Successful',
+            status: 200,
+            data: responseResult,
+          });
       }
+      return res.status(400).json({
+        status: 400,
+        error: 'Email or password is incorrect',
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        error,
+      });
     }
-
-    return res.status(400).send({
-      status: 400,
-      error: 'Email or password is incorrect',
-    });
-  }
-}
+  },
+};
 
 export default HomeController;

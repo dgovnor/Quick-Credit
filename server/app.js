@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -6,7 +7,6 @@ import homeRoute from './routes/homeRoute';
 import adminRoute from './routes/adminRoute';
 import userRoute from './routes/userRoute';
 import docs from './docs/swagger.json';
-
 // set up express app
 const app = express();
 
