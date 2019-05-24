@@ -1,16 +1,12 @@
 import moment from 'moment';
 import db from '../index';
-import Authentic from '../auth/authentication';
+
 
 class UserController {
   static async applyForLoan(req, res) {
     const {
       amount, tenor,
     } = req.body;
-    const { verifyToken } = Authentic;
-    const token = req.headers.authorization.split(' ')[1] || req.headers.authorization;
-    const decoded = verifyToken(token);
-    req.payload = decoded.payload;
     const { email } = req.payload;
     const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
