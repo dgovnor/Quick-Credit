@@ -12,10 +12,16 @@ class Authorisation {
    * @param {fuction} next
    * @returns {object}Json api response
    */
-  static verifyAdmin(req, res, next) {
-    const user = users.filter(element => element.id === parseInt(req.params.id, 10));
-    if (user.length === 0 || req.payload.email !== user[0].email
-      || user[0].id !== req.payload.id || !user[0].isAdmin) {
+  static async verifyAdmin(req, res, next) {
+    const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [parseInt(req.params.id, 10)]);
+    if (!rows) {
+      return res.status(403).send({
+        status: 403,
+        error: 'Only An admin can access this route',
+      });
+    }
+    if (rows.length === 0 || req.payload.email !== rows[0].email
+      || rows[0].id !== req.payload.id || !rows[0].isadmin) {
       return res.status(403).send({
         status: 403,
         error: 'Only An admin can access this route',
@@ -41,7 +47,7 @@ class Authorisation {
       });
     }
     if (rows.length === 0 || req.payload.email !== rows[0].email
-      || rows[0].id !== req.payload.id || rows[0].isAdmin) {
+      || rows[0].id !== req.payload.id || rows[0].isadmin) {
       return res.status(403).send({
         status: 403,
         error: 'Unauthorized User',

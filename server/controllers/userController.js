@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { loans, users, loanRepayment } from '../models/dataStructure';
 import db from '../index';
 import Authentic from '../auth/authentication';
 
@@ -48,7 +47,7 @@ class UserController {
     try {
       const { rows } = await db.query('SELECT * FROM loans WHERE useremail = $1', [email]);
 
-      if (rows.length === 0 && rows[0].balance === 0) {
+      if (rows.length === 0) {
         await db.query(text, values);
         return res.status(201).send({
           status: 201,
@@ -56,7 +55,22 @@ class UserController {
           data,
         });
       }
-      if (rows[0].balance > 0) {
+      const recentLoan = rows.find(loan => loan.balance > 0 && loan.status === 'rejected');
+      if (recentLoan) {
+        await db.query('UPDATE loans SET balance =$1 WHERE id = $2', ['0', recentLoan.id]);
+      }
+      const result = await db.query('SELECT * FROM loans WHERE useremail = $1', [email]);
+      const resultLoan = result.rows.find(loan => loan.balance > 0);
+
+      if (!resultLoan) {
+        await db.query(text, values);
+        return res.status(201).send({
+          status: 201,
+          message: 'Successful',
+          data,
+        });
+      }
+      if (resultLoan) {
         return res.status(409).send({
           status: 409,
           error: 'You have already applied for a loan',
@@ -65,49 +79,30 @@ class UserController {
     } catch (error) {
       console.log(error);
     }
-
-    const loanresult2 = loans.findIndex(loan => loan.email === email && loan.balance > 0);
-    const loanEmail = loans[loanresult2];
-    const changeBalance = loans.find(loan => loan.email === email && loan.status === 'rejected' && loan.balance > 0);
-
-    if (changeBalance) {
-      loanEmail.balance = 0;
-    }
-    if (loans.find(loan => loan.email === email && loan.balance > 0)) {
-      return res.status(409).send({
-        status: 409,
-        error: 'You have already applied for a loan',
-      });
-    }
   }
 
-  static getRepaymentLoan(req, res) {
-    const { id, loanid } = req.params;
-    const userEmail = users.find(user => user.id === parseInt(id, 10));
-    const loansId = loans.find(loan => loan.id === parseInt(loanid, 10));
-    if (!loansId) {
-      return res.status(400).send({
-        status: 400,
-        error: 'No loan repayment history',
-      });
-    }
-    if (loansId.email === userEmail.email) {
-      const repayment = loanRepayment.filter(loani => loani.loadId === parseInt(loanid, 10));
-      if (repayment.length > 0) {
-        return res.status(200).send({
-          status: 200,
-          data: repayment,
-        });
-      }
-      return res.status(400).send({
-        status: 400,
-        error: 'No loan repayment history',
-      });
-    }
+  static async getRepaymentLoan(req, res) {
+    const { loanid } = req.params;
+    const { email } = req.payload;
 
-    return res.status(403).send({
-      status: 403,
-      error: 'Unauthorized User',
+    const { rows } = await db.query(`SELECT repayment.loanid,loans.createdon,loans.paymentinstallment,repayment.amount FROM loans 
+                                    JOIN repayment ON loans.id = repayment.loanid WHERE loans.useremail = $1`, [email]);
+    if (rows.length < 1) {
+      return res.status(400).json({
+        status: 400,
+        error: 'No repayment history found',
+      });
+    }
+    const loansId = rows.filter(loan => loan.loanid === parseInt(loanid, 10));
+    if (loansId.length < 1) {
+      return res.status(400).send({
+        status: 400,
+        error: 'No loan repayment history',
+      });
+    }
+    return res.status(200).send({
+      status: 200,
+      data: loansId,
     });
   }
 }

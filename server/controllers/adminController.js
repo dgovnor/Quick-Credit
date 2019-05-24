@@ -1,154 +1,167 @@
 import moment from 'moment';
-import { users, loanRepayment, loans } from '../models/dataStructure';
+import db from '../index';
 
 
 class AdminController {
-  static adminVerifyUser(req, res) {
+  static async adminVerifyUser(req, res) {
     const { email } = req.params;
-    const userDataIndex = users.findIndex(user => user.email === email);
-    const userData = users[userDataIndex];
-    if (userData) {
-      if (userData.status === 'verified') {
-        return res.status(400).send({
+    try {
+      const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+      if (rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: "This user doesn't exist",
+        });
+      }
+      if (rows[0].status === 'verified') {
+        return res.status(400).json({
           status: 400,
           error: 'User is already verified',
         });
       }
-      userData.status = 'verified';
-
+      await db.query('UPDATE users SET status = $1 WHERE email = $2', ['verified', email]);
       const newUserData = {
-        email: userData.email,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        address: userData.address,
-        status: userData.status,
-        isAdmin: userData.isAdmin,
+        email: rows[0].email,
+        firstName: rows[0].firstname,
+        lastName: rows[0].lastname,
+        address: rows[0].address,
+        status: 'verified',
+        isAdmin: rows[0].isadmin,
       };
-
       return res.status(200).send({
         status: 200,
         data: newUserData,
       });
-    }
-    return res.status(400).send({
-      status: 400,
-      error: "This user doesn't exist",
-    });
-  }
-
-  static adminPostRepayment(req, res) {
-    const { loanid } = req.params;
-    const { amount } = req.body;
-    const loanresult = loans.find(loan => loan.id === parseInt(loanid, 10));
-
-    if (loanresult) {
-      if (loanresult.status === 'approved') {
-        const repayment = {
-          id: loanRepayment.length + 100,
-          createdOn: moment().format('LLL'),
-          loadId: loanresult.id,
-          monthlyInstallment: loanresult.paymentInstallment,
-          amount,
-        };
-        const loanresult2 = loans.findIndex(loan => loan.id === parseInt(loanid, 10));
-        if (parseInt(amount, 10) <= loans[loanresult2].balance) {
-          if (parseInt(amount, 10) % loanresult.paymentInstallment !== 0) {
-            return res.status(400).send({
-              status: 400,
-              error: `Amount can't be less than Monthly installment ${loanresult.paymentInstallment}`,
-            });
-          }
-          loans[loanresult2].balance -= parseInt(amount, 10);
-
-          const loansRepayment = {
-            id: loanRepayment.length + 100,
-            loanId: loanresult.id,
-            createdOn: moment().format('LLL'),
-            amount: loanresult.amount,
-            monthlyInstallment: loanresult.paymentInstallment,
-            paidAmount: parseInt(repayment.amount, 10),
-            balance: loans[loanresult2].balance,
-          };
-
-          if (loansRepayment.balance === 0) {
-            loans[loanresult2].repaid = true;
-          }
-          loanRepayment.push(repayment);
-          return res.status(200).send({
-            status: 200,
-            message: 'Payment accepted',
-            data: loansRepayment,
-          });
-        }
-        if (loans[loanresult2].balance === 0) {
-          return res.status(201).send({
-            status: 201,
-            message: 'Client has repaid loan fully',
-          });
-        }
-        return res.status(400).send({
-          status: 400,
-          error: 'Amount exceeds client debt!',
-        });
-      }
+    } catch (error) {
       return res.status(400).send({
         status: 400,
-        error: 'Loan should be approved to post payment',
+        error: "This user doesn't exist",
       });
     }
+  }
 
-    return res.status(400).send({
-      status: 400,
-      error: 'Loan application not found',
-    });
+  static async adminPostRepayment(req, res) {
+    const { loanid } = req.params;
+    const { amount } = req.body;
+
+    try {
+      const loanId = await db.query('SELECT * FROM loans WHERE id = $1', [parseInt(loanid, 10)]);
+      if (loanId.rows.length === 0) {
+        return res.status(400).send({
+          status: 400,
+          error: 'Loan application not found',
+        });
+      }
+      if (loanId.rows[0].status !== 'approved') {
+        return res.status(400).send({
+          status: 400,
+          error: 'Loan should be approved to post payment',
+        });
+      }
+      if (parseInt(amount, 10) <= loanId.rows[0].balance) {
+        if (parseInt(amount, 10) % parseInt(loanId.rows[0].paymentinstallment, 10) !== 0) {
+          return res.status(400).send({
+            status: 400,
+            error: `Amount can't be less than Monthly installment ${loanId.rows[0].paymentinstallment}`,
+          });
+        }
+        const balance = parseInt(loanId.rows[0].balance, 10) - parseInt(amount, 10);
+        await db.query('UPDATE loans SET balance = $1 WHERE id = $2', [balance, parseInt(loanid, 10)]);
+        const loansRepayment = {
+          loanId: loanId.rows[0].id,
+          createdOn: moment().format('LLL'),
+          amount: loanId.rows[0].amount,
+          monthlyInstallment: loanId.rows[0].paymentinstallment,
+          paidAmount: parseInt(amount, 10),
+          balance,
+        };
+        const txt = `INSERT INTO repayment 
+                    (loanid,createdon,amount) VALUES($1,$2,$3) RETURNING *`;
+        const values = [loanId.rows[0].id, moment().format('LLL'), parseInt(amount, 10)];
+        if (balance === 0) {
+          await db.query('UPDATE loans SET repaid = $1 WHERE id = $2', [true, parseInt(loanid, 10)]);
+        }
+        await db.query(txt, values);
+        return res.status(200).json({
+          status: 200,
+          message: 'Payment accepted',
+          data: loansRepayment,
+        });
+      }
+      if (loanId.rows[0].balance <= 0) {
+        return res.status(201).json({
+          status: 201,
+          message: 'Client has repaid loan fully',
+        });
+      }
+
+      return res.status(400).json({
+        status: 400,
+        error: 'Amount exceeds client debt!',
+      });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Connection Error',
+      });
+    }
   }
 
   // Admin approves or rejects loan request
-  static approveOrRejectLoan(req, res) {
+  static async approveOrRejectLoan(req, res) {
     const { loanid } = req.params;
     const { decision } = req.body;
-    const loanresult2 = loans.findIndex(loan => loan.id === parseInt(loanid, 10));
-    const loanresult = loans[loanresult2];
-    if (loanresult) {
-      const userresult = users.find(user => user.email === loanresult.email);
-      if (userresult.status === 'verified') {
-        if (loanresult) {
-          if (loanresult.status === decision) {
-            return res.status(400).send({
-              status: 400,
-              error: `Loan already ${decision}`,
-            });
-          }
-          loanresult.status = decision;
-
-          const newLoanData = {
-            loanId: loanresult.id,
-            loanAmount: loanresult.amount,
-            tenor: loanresult.tenor,
-            status: loanresult.status,
-            monthlyInstallment: loanresult.paymentInstallment,
-            interest: loanresult.interest,
-          };
-
-          return res.status(200).send({
-            status: 200,
-            data: newLoanData,
+    try {
+      const loanId = await db.query('SELECT * FROM loans WHERE id = $1', [parseInt(loanid, 10)]);
+      if (loanId.rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: 'This loan doesn\'t exist',
+        });
+      }
+      const { rows } = await db.query('SELECT users.status FROM users JOIN loans ON users.email = loans.useremail WHERE loans.id = $1', [parseInt(loanid, 10)]);
+      if (rows[0].status === 'verified') {
+        if (loanId.rows[0].status === decision) {
+          return res.status(400).json({
+            status: 400,
+            error: `Loan already ${decision}`,
           });
         }
+        if (loanId.rows[0].balance <= 0) {
+          return res.status(400).json({
+            status: 400,
+            error: 'Can\'t reject already paid Loan',
+          });
+        }
+        await db.query('UPDATE loans SET status = $1 WHERE id = $2', [decision, parseInt(loanid, 10)]);
+        const newLoanData = {
+          loanId: loanId.rows[0].id,
+          loanAmount: loanId.rows[0].amount,
+          tenor: loanId.rows[0].tenor,
+          status: decision,
+          monthlyInstallment: loanId.rows[0].paymentInstallment,
+          interest: loanId.rows[0].interest,
+        };
+
+        return res.status(200).json({
+          status: 200,
+          data: newLoanData,
+        });
       }
-      return res.status(400).send({
+      return res.status(400).json({
         status: 400,
         error: 'User is not yet verified',
       });
+    } catch (error) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Connection Error',
+      });
     }
-    return res.status(400).send({
-      status: 400,
-      error: 'This loan doesn\'t exist',
-    });
   }
 
   // Get loan of users
-  static getLoan(req, res) {
+  static async getLoan(req, res) {
     const { status, repaid } = req.query;
     const queryKeys = Object.keys(req.query);
     if ((Object.keys(req.query).length) && (queryKeys[0] !== 'status' || queryKeys[1] !== 'repaid')) {
@@ -157,8 +170,9 @@ class AdminController {
         error: 'Query must be status and repaid',
       });
     }
+    const { rows } = await db.query('SELECT * FROM loans');
     if (status && repaid) {
-      const checkLoans = loans.filter(loan => loan.status === status
+      const checkLoans = rows.filter(loan => loan.status === status
         && loan.repaid.toString() === repaid);
       if (checkLoans && checkLoans.length) {
         return res.status(200).send({
@@ -173,7 +187,7 @@ class AdminController {
         });
       }
     }
-    if (loans.length < 1) {
+    if (rows.length < 1) {
       return res.status(400).send({
         status: 400,
         error: 'No loan found',
@@ -181,60 +195,62 @@ class AdminController {
     }
     return res.status(200).send({
       status: 200,
-      data: loans,
+      data: rows,
     });
   }
 
   // Get specific loan of users
-  static getSpecificLoan(req, res) {
+  static async getSpecificLoan(req, res) {
     const { loanid } = req.params;
-    const loanresult = loans.find(loan => loan.id === parseInt(loanid, 10));
-    if (loanresult) {
-      const getloan = {
-        id: loanresult.id,
-        user: loanresult.email,
-        createdOn: loanresult.createdOn,
-        status: loanresult.status,
-        repaid: loanresult.repaid,
-        tenor: loanresult.tenor,
-        amount: loanresult.amount,
-        paymentInstallment: loanresult.paymentInstallment,
-        balance: loanresult.balance,
-        interest: loanresult.interest,
-      };
-
-      return res.status(200).send({
-        status: 200,
-        data: getloan,
+    const { rows } = await db.query('SELECT * FROM loans WHERE id = $1', [parseInt(loanid, 10)]);
+    if (rows.length < 1) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Loan not found',
       });
     }
-    return res.status(400).send({
-      status: 400,
-      error: 'Loan not found',
+
+    const getloan = {
+      id: rows[0].id,
+      user: rows[0].useremail,
+      createdOn: moment(rows[0].createdon).format('LLL'),
+      status: rows[0].status,
+      repaid: rows[0].repaid,
+      tenor: rows[0].tenor,
+      amount: rows[0].amount,
+      paymentInstallment: rows[0].paymentinstallment,
+      balance: rows[0].balance,
+      interest: rows[0].interest,
+    };
+
+    return res.status(200).send({
+      status: 200,
+      data: getloan,
     });
   }
 
-  static getSpecificUser(req, res) {
+  static async getSpecificUser(req, res) {
     const { email } = req.params;
-    const result = users.find(user => user.email === email);
-    if (result) {
-      const newUser = {
-        id: result.id,
-        email: result.email,
-        firstName: result.firstName,
-        lastName: result.lastName,
-        address: result.address,
-        status: result.status,
-        isAdmin: result.isAdmin,
-      };
-      return res.status(200).send({
-        status: 200,
-        data: newUser,
+    const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (rows.length < 1) {
+      return res.status(400).json({
+        status: 400,
+        error: 'User not found',
       });
     }
-    return res.status(400).send({
-      status: 400,
-      error: 'User not found',
+
+    const newUser = {
+      id: rows[0].id,
+      email: rows[0].email,
+      firstName: rows[0].firstname,
+      lastName: rows[0].lastname,
+      address: rows[0].address,
+      status: rows[0].status,
+      isAdmin: rows[0].isadmin,
+    };
+    return res.status(200).send({
+      status: 200,
+      data: newUser,
     });
   }
 }

@@ -7,6 +7,7 @@ const queryTable = async () => {
     // Queries to drop Tables
     await db.query('DROP TABLE IF EXISTS users CASCADE;');
     await db.query('DROP TABLE IF EXISTS loans CASCADE;');
+    await db.query('DROP TABLE IF EXISTS repayment CASCADE;');
     // Create a uuid key
     // await db.query('CREATE EXTENSION IF NOT EXISTS pgcrypto');
     // await db.query('SELECT gen_random_uuid()');
