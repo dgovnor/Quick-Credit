@@ -3,7 +3,8 @@ import moment from 'moment';
 import authenticate from '../auth/authentication';
 import db from '../index';
 
-const queryTable = async () => {
+// eslint-disable-next-line import/prefer-default-export
+export const queryTable = async () => {
   try {
     // Queries to drop Tables
     await db.query('DROP TABLE IF EXISTS users CASCADE;');
@@ -94,5 +95,3 @@ const queryTable = async () => {
     return err.stack;
   }
 };
-
-queryTable();

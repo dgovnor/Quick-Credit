@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import { queryTable } from '../models/database';
 import app from '../app';
 import { userdata, removeData } from '../models/testdata';
 
@@ -11,6 +12,7 @@ chai.use(chaiHttp);
 
 // Testing signup route
 before(async () => {
+  await queryTable();
   await userdata();
 });
 
