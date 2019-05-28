@@ -1,3 +1,5 @@
+services:
+  - postgresql 
 env:
   global:
     - CC_TEST_REPORTER_ID=63c109f3139a53654f307c4ae0856ae8b4fbc927249b3aededc5c08bd40b2402
@@ -9,8 +11,7 @@ cache:
     - "node_modules"
 notifications:
   email: false
-services:
-  - postgresql  
+ 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
