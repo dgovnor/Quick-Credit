@@ -8,7 +8,7 @@ class UserController {
       amount, tenor,
     } = req.body;
     const { email } = req.payload;
-    const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
 
     const interest = 0.05 * parseInt(amount, 10);
     const text = `INSERT INTO 
@@ -16,7 +16,7 @@ class UserController {
       tenor,createdOn,amount,paymentInstallment,status,repaid,balance,interest) VALUES($1,$2,$3,
         $4,$5,$6,$7,$8,$9) RETURNING *`;
     const values = [
-      rows[0].email,
+      user.rows[0].email,
       tenor,
       moment().format('LLL'),
       amount,
@@ -26,25 +26,27 @@ class UserController {
       parseInt(amount, 10) + interest,
       interest,
     ];
-    const data = {
-      firstName: rows[0].firstname,
-      lastName: rows[0].lastname,
-      email: rows[0].email,
-      tenor,
-      createdOn: moment().format('LLL'),
-      amount,
-      paymentInstallment: (parseInt(amount, 10) + interest) / parseInt(tenor, 10),
-      status: 'Pending',
-      repaid: false,
-      balance: parseInt(amount, 10) + interest,
-      interest,
-    };
+
 
     try {
       const { rows } = await db.query('SELECT * FROM loans WHERE useremail = $1', [email]);
 
       if (rows.length === 0) {
-        await db.query(text, values);
+        const result = await db.query(text, values);
+        const data = {
+          id: result.rows[0].id,
+          firstName: user.rows[0].firstname,
+          lastName: user.rows[0].lastname,
+          email: user.rows[0].email,
+          tenor: result.rows[0].tenor,
+          createdOn: moment(result.rows[0].createdon).format('LLL'),
+          amount: result.rows[0].amount,
+          paymentInstallment: result.rows[0].paymentinstallment,
+          status: result.rows[0].status,
+          repaid: result.rows[0].repaid,
+          balance: result.rows[0].balance,
+          interest: result.rows[0].interest,
+        };
         return res.status(201).send({
           status: 201,
           message: 'Successful',
@@ -59,7 +61,21 @@ class UserController {
       const resultLoan = result.rows.find(loan => loan.balance > 0);
 
       if (!resultLoan) {
-        await db.query(text, values);
+        const newLoan = await db.query(text, values);
+        const data = {
+          id: newLoan.rows[0].id,
+          firstName: user.rows[0].firstname,
+          lastName: user.rows[0].lastname,
+          email: user.rows[0].email,
+          tenor: newLoan.rows[0].tenor,
+          createdOn: moment(newLoan.rows[0].createdon).format('LLL'),
+          amount: newLoan.rows[0].amount,
+          paymentInstallment: newLoan.rows[0].paymentinstallment,
+          status: newLoan.rows[0].status,
+          repaid: newLoan.rows[0].repaid,
+          balance: newLoan.rows[0].balance,
+          interest: newLoan.rows[0].interest,
+        };
         return res.status(201).send({
           status: 201,
           message: 'Successful',

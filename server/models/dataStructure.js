@@ -1,4 +1,4 @@
-import { userdata } from './testdata';
+import { userdata, removeData } from './testdata';
 
 export const users = [];
 export const loans = [];
@@ -6,12 +6,14 @@ export const repayment = [];
 export const loanRepayment = [];
 
 export const addDefaultUser = () => {
-  userdata.forEach((element) => {
-    users.push(element);
-  });
+  userdata();
+  // userdata.forEach((element) => {
+  //   users.push(element);
+  // });
 };
-
-
+export const removesData = () => {
+  removeData();
+};
 const defaultAdmin = {
   id: 100,
   email: 'admin@quickcredit.com',

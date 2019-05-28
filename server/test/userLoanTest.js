@@ -11,8 +11,8 @@ chai.use(chaiHttp);
 describe('User can login', () => {
   it('Should return 200 if user login successfully', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela5@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -47,7 +47,7 @@ describe('User can login', () => {
 
   it('Should return 400 if user password is incorrect', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
+      email: 'andela5@gmail.com',
       password: 'andelaanth',
     };
     chai
@@ -103,8 +103,8 @@ describe('User can login', () => {
 describe('User can apply for loan', () => {
   it('Should return if id is invalid', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -127,7 +127,7 @@ describe('User can apply for loan', () => {
         };
         chai
           .request(app)
-          .post(`/api/v1/user/${'house'}/loans`)
+          .post(`/api/v1/user/${'200000'}/loans`)
           .set('authorization', token)
           .send(applyLoan)
           .end((_err, response) => {
@@ -142,8 +142,8 @@ describe('User can apply for loan', () => {
 
   it('Should return 401 if token is invalid', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -179,46 +179,10 @@ describe('User can apply for loan', () => {
       });
   });
 
-  it('Should create loan application successful', (done) => {
-    const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
-    };
-    chai
-      .request(app)
-      .post(LOGIN)
-      .send(USER)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('data');
-        res.body.data.should.have.property('token');
-
-        const {
-          id, token,
-        } = res.body.data;
-        const applyLoan = {
-          amount: 200000,
-          tenor: 12,
-        };
-        chai
-          .request(app)
-          .post(`/api/v1/user/${id}/loans`)
-          .set('authorization', token)
-          .send(applyLoan)
-          .end((_err, response) => {
-            response.body.should.be.a('object');
-            response.should.have.status(201);
-            response.body.should.have.property('data');
-            done();
-          });
-      });
-  });
-
   it('Should return 400 if application amount is emmitted', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -255,8 +219,8 @@ describe('User can apply for loan', () => {
 
   it('Should return 400 if application tenor is emmitted', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -294,8 +258,8 @@ describe('User can apply for loan', () => {
   // if loan application values are valid
   it('Should return 400 if application amount is not a number', (done) => {
     const USER = {
-      email: 'andela3@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -333,8 +297,8 @@ describe('User can apply for loan', () => {
 
   it('Should return 400 if application tenor is not a number', (done) => {
     const USER = {
-      email: 'andela4@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -373,8 +337,8 @@ describe('User can apply for loan', () => {
   // Check if tenor is more than 12 month or amount is less than 5000
   it('Should return 400 if application account is less than 5000', (done) => {
     const USER = {
-      email: 'andela2@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -411,8 +375,8 @@ describe('User can apply for loan', () => {
   });
   it('Should return 400 if application tenor is greater than 12 and less than 1', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'andela6@gmail.com',
+      password: 'combination',
     };
     chai
       .request(app)

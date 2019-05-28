@@ -11,8 +11,8 @@ chai.use(chaiHttp);
 describe('Admin verify user', () => {
   it('Should return 200 if admin is verified and can verify user', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -24,7 +24,7 @@ describe('Admin verify user', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const email = 'andela@gmail.com';
+        const email = 'jude@quickcredit.com';
         chai
           .request(app)
           .patch(`/api/v1/admin/${id}/users/${email}/verify`)
@@ -40,8 +40,8 @@ describe('Admin verify user', () => {
 
   it('Should return 400 if user is not an admin', (done) => {
     const USER = {
-      email: 'andela@gmail.com',
-      password: 'andelaanthony',
+      email: 'jude@quickcredit.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -53,7 +53,7 @@ describe('Admin verify user', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const email = 'andela@gmail.com';
+        const email = 'jude@quickcredit.com';
         chai
           .request(app)
           .patch(`/api/v1/admin/${id}/users/${email}/verify`)
@@ -69,8 +69,8 @@ describe('Admin verify user', () => {
   });
   it('Should return 400 if email of user is incorrect', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -98,8 +98,8 @@ describe('Admin verify user', () => {
   });
   it('Should return 403 if admin id is incorrect', (done) => {
     const USER = {
-      email: 'adminjude@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -111,10 +111,10 @@ describe('Admin verify user', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { token } = res.body.data;
-        const email = 'andela@gmail.com';
+        const email = 'jude@quickcredit.com';
         chai
           .request(app)
-          .patch(`/api/v1/admin/${2}/users/${email}/verify`)
+          .patch(`/api/v1/admin/${102}/users/${email}/verify`)
           .set('Authorization', token)
           .end((_error, response) => {
             response.should.have.status(403);

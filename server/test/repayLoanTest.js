@@ -10,8 +10,8 @@ chai.use(chaiHttp);
 describe('Admin post repayment', () => {
   it('Should create loan application successful', (done) => {
     const USER = {
-      email: 'andela2@gmail.com',
-      password: 'andelaanthony',
+      email: 'jude@quickcredit.com',
+      password: 'combination',
     };
     chai
       .request(app)
@@ -48,8 +48,8 @@ describe('Admin post repayment', () => {
   });
   it('Should return 200 if admin can post', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -61,8 +61,8 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 678;
-        const amount = { amount: 100 };
+        const loanid = 1;
+        const amount = { amount: 55 };
         chai
           .request(app)
           .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)
@@ -79,8 +79,8 @@ describe('Admin post repayment', () => {
   });
   it('Should return 400 if amount posted exceed balance', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -92,7 +92,7 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 678;
+        const loanid = 1;
         const amount = { amount: 200000 };
         chai
           .request(app)
@@ -110,8 +110,8 @@ describe('Admin post repayment', () => {
   });
   it('Should return 400 if loan application isn\'t found', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -140,44 +140,9 @@ describe('Admin post repayment', () => {
       });
   });
   it('Should return 201 if client completes payment', (done) => {
-    const USER = {
-      email: 'andela3@gmail.com',
-      password: 'andelaanthony',
-    };
-    chai
-      .request(app)
-      .post(LOGIN)
-      .send(USER)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        res.body.should.have.property('data');
-        res.body.data.should.have.property('token');
-
-        const {
-          id, firstName, lastName, email, token,
-        } = res.body.data;
-        const applyLoan = {
-          firstName,
-          lastName,
-          email,
-          amount: 200000,
-          tenor: 12,
-        };
-        chai
-          .request(app)
-          .post(`/api/v1/user/${id}/loans`)
-          .set('authorization', token)
-          .send(applyLoan)
-          .end((_err, response) => {
-            response.body.should.be.a('object');
-            response.should.have.status(201);
-            response.body.should.have.property('data');
-          });
-      });
     const Admin = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -190,38 +155,25 @@ describe('Admin post repayment', () => {
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
 
-        const loanid = 578;
-        const amount = { amount: 1000 };
+        const loanid = 2;
+        const amount = { amount: 10000 };
         chai
           .request(app)
           .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)
           .set('authorization', token)
           .send(amount)
-          .end((_error, response) => {
-            response.body.should.have.status(200);
-            response.body.should.be.a('object');
-            response.body.should.have.property('data');
-            response.body.message.should.eql('Payment accepted');
-
-            const amount2 = { amount: 100000 };
-            chai
-              .request(app)
-              .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)
-              .set('authorization', token)
-              .send(amount2)
-              .end((_error2, response2) => {
-                response2.body.should.have.status(201);
-                response2.body.should.be.a('object');
-                response2.body.message.should.eql('Client has repaid loan fully');
-              });
+          .end((_error2, response2) => {
+            response2.body.should.have.status(201);
+            response2.body.should.be.a('object');
+            response2.body.message.should.eql('Client has repaid loan fully');
             done();
           });
       });
   });
   it('Should return 400 if amount is omitted', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -233,7 +185,7 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 2100;
+        const loanid = 1;
         chai
           .request(app)
           .post(`/api/v1/admin/${id}/loans/${loanid}/repayment`)
@@ -249,8 +201,8 @@ describe('Admin post repayment', () => {
   });
   it('Should return 400 if amount is not a number', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -262,7 +214,7 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 2100;
+        const loanid = 1;
         const amount = { amount: '\'110000\'' };
         chai
           .request(app)
@@ -280,8 +232,8 @@ describe('Admin post repayment', () => {
   });
   it('Should return 400 if amount is less than 0', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -293,7 +245,7 @@ describe('Admin post repayment', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 2100;
+        const loanid = 1;
         const amount = { amount: -1 };
         chai
           .request(app)

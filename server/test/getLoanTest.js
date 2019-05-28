@@ -12,8 +12,8 @@ chai.use(chaiHttp);
 describe('Admin can get all kinds of loan', () => {
   it('should return 200 if admin gets loan successsfully', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -39,8 +39,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 200 if admin gets specific loan successsfully', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -52,7 +52,7 @@ describe('Admin can get all kinds of loan', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 578;
+        const loanid = 1;
         chai
           .request(app)
           .get(`/api/v1/admin/${id}/loans/${loanid}`)
@@ -67,8 +67,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 400 if no loan available', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -80,7 +80,7 @@ describe('Admin can get all kinds of loan', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 400;
+        const loanid = 4000;
         chai
           .request(app)
           .get(`/api/v1/admin/${id}/loans/${loanid}`)
@@ -96,8 +96,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 400 if incorrect loanid', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -125,8 +125,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 200 if admin gets loan with status approved and repaid false', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -153,8 +153,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 200 if admin gets loan with status approved and repaid true', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -181,8 +181,8 @@ describe('Admin can get all kinds of loan', () => {
   });
   it('should return 400 if query keys isn\'t status and repaid', (done) => {
     const USER = {
-      email: 'admin@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -212,7 +212,7 @@ describe('Admin can get all kinds of loan', () => {
 describe('User can get Loan repayment history', () => {
   it('should return 200 if user gets loan repayment', (done) => {
     const USER = {
-      email: 'jude4@gmail.com',
+      email: 'andela8@gmail.com',
       password: 'combination',
     };
     chai
@@ -225,7 +225,7 @@ describe('User can get Loan repayment history', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 678;
+        const loanid = 1;
         chai
           .request(app)
           .get(`/api/v1/user/${id}/loans/${loanid}/repayments`)
@@ -240,7 +240,7 @@ describe('User can get Loan repayment history', () => {
   });
   it('should return 400 if user doesn\'t have loan repayment', (done) => {
     const USER = {
-      email: 'jude4@gmail.com',
+      email: 'andela5@gmail.com',
       password: 'combination',
     };
     chai
@@ -262,15 +262,15 @@ describe('User can get Loan repayment history', () => {
             response.should.have.status(400);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
-            response.body.error.should.be.eql('No loan repayment history');
+            response.body.error.should.be.eql('No repayment history found');
           });
         done();
       });
   });
   it('should return 403 if user loan email is not correct', (done) => {
     const USER = {
-      email: 'jude@gmail.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -282,7 +282,7 @@ describe('User can get Loan repayment history', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const loanid = 678;
+        const loanid = 1;
         chai
           .request(app)
           .get(`/api/v1/user/${id}/loans/${loanid}/repayments`)
@@ -300,8 +300,8 @@ describe('User can get Loan repayment history', () => {
 describe('Admin can get specific users', () => {
   it('Should return 200 if admin get\'s user successfully', (done) => {
     const USER = {
-      email: 'adminjude@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -313,7 +313,7 @@ describe('Admin can get specific users', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const email = 'jude4@gmail.com';
+        const email = 'andela5@gmail.com';
         chai
           .request(app)
           .get(`/api/v1/admin/${id}/users/${email}`)
@@ -328,8 +328,8 @@ describe('Admin can get specific users', () => {
   });
   it('Should return 400 if user is not found', (done) => {
     const USER = {
-      email: 'adminjude@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -359,8 +359,8 @@ describe('Admin can get specific users', () => {
 
   it('Should return 400 if wrong email is entered', (done) => {
     const USER = {
-      email: 'adminjude@quickcredit.com',
-      password: 'combination',
+      email: 'admin@quick-credit.com',
+      password: 'admin',
     };
     chai
       .request(app)
@@ -372,7 +372,7 @@ describe('Admin can get specific users', () => {
         res.body.should.have.property('data');
         res.body.data.should.have.property('token');
         const { id, token } = res.body.data;
-        const email = 'andela56@quickcredit';
+        const email = 'andela5@quickcredit';
         chai
           .request(app)
           .get(`/api/v1/admin/${id}/users/${email}`)
